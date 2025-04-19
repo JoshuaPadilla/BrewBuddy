@@ -27,8 +27,9 @@ const Login = () => {
   });
 
   if (authUser?.role === "admin")
-    return <Redirect href="/(staff)/orders_screen" />;
-  if (authUser?.role === "user") return <Redirect href="/(tabs)/home" />;
+    return <Redirect href="/(auth_screens)/(staff)/orders_screen" />;
+  if (authUser?.role === "user")
+    return <Redirect href="/(auth_screens)/(tabs)/home" />;
 
   const handlelogIn = () => {
     if (!form.email || !form.password) {

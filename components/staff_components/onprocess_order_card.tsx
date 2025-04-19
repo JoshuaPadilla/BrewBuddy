@@ -17,16 +17,16 @@ const OnProcessOrderCard = ({ order, onComplete }: ComponentProps) => {
   const remainingItems = order.items.length - imageURLs.length;
 
   return (
-    <View className="bg-primary-100 p-4 rounded-lg">
+    <View className="bg-primary-100 p-6 rounded-lg">
       {/* Headings (name and button) */}
       <View className="flex-row justify-between">
-        <Text className="font-poppins-medium text-lg">
+        <Text className="font-poppins-bold text-white text-xl">
           {order.userID?.firstName} {order.userID?.lastName}
         </Text>
 
         <CustomButton
-          title="View full details"
-          textClassname="font-poppins-regular text-white/60"
+          title="View details"
+          textClassname="font-poppins-semibold text-white/60 text-sm"
         />
       </View>
 

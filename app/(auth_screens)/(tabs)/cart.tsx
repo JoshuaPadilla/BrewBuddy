@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/custom_button";
@@ -62,12 +68,6 @@ const Cart = () => {
   }, [selectedItems]);
   return (
     <SafeAreaView className="flex-1 px-4 py-8 gap-8">
-      <Spinner
-        visible={isLoading}
-        textContent={"fetching cart items..."}
-        textStyle={{ color: "#FFF" }}
-      />
-
       {/* headings */}
       <View className="flex-row justify-between">
         <Text className="font-poppins-bold text-black-100 text-xl">
@@ -87,17 +87,25 @@ const Cart = () => {
         showsVerticalScrollIndicator={false}
       >
         {cart && cart.length > 0 ? (
-          cart.map((orderItem, index) => (
-            <CartItem
-              orderItem={orderItem}
-              key={index}
-              isSelecting={isSelecting}
-              onSelect={() => handleSelectItem(orderItem)}
-              onUnselect={() => handleUnselectItem(orderItem._id || "")}
-              onRemove={() => handleRemoveItem(orderItem._id || "")}
-              onCheckout={() => handleOnCheckoutOne(orderItem)}
+          isLoading ? (
+            <ActivityIndicator
+              className="p-16"
+              color="#73C088"
+              size={"large"}
             />
-          ))
+          ) : (
+            cart.map((orderItem, index) => (
+              <CartItem
+                orderItem={orderItem}
+                key={index}
+                isSelecting={isSelecting}
+                onSelect={() => handleSelectItem(orderItem)}
+                onUnselect={() => handleUnselectItem(orderItem._id || "")}
+                onRemove={() => handleRemoveItem(orderItem._id || "")}
+                onCheckout={() => handleOnCheckoutOne(orderItem)}
+              />
+            ))
+          )
         ) : (
           <Text className="font-poppins-regular text-black-100/50 text-xl text-center">
             No Items in your cart

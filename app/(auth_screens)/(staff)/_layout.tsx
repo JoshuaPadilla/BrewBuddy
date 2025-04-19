@@ -2,6 +2,7 @@ import { tab_icons } from "@/constants/icons";
 import { useAuthStore } from "@/store/useAuth";
 import { Redirect, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { Image, Text, View } from "react-native";
 
 const TabIcon = ({

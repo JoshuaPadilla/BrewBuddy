@@ -46,17 +46,8 @@ export default function RootLayout() {
     <>
       <StatusBar style="auto" backgroundColor="#73C088" translucent />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-        <Stack.Screen name="(staff)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(utility_screens)"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(ordering_screens)"
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="(auth_screens)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </>

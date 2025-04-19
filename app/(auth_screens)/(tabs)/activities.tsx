@@ -14,19 +14,13 @@ const Activities = () => {
 
   const filteredOrders =
     filter === "ON GOING"
-      ? orders
-          .filter(
-            (order) =>
-              order.status !== "cancelled" && order.status !== "completed"
-          )
-          .reverse()
-      : orders
-          .filter(
-            (order) =>
-              order.status !== "pending" && order.status !== "processing"
-          )
-          .reverse();
-
+      ? orders.filter(
+          (order) =>
+            order.status !== "cancelled" && order.status !== "completed"
+        )
+      : orders.filter(
+          (order) => order.status !== "pending" && order.status !== "processing"
+        );
   useEffect(() => {
     const intervalId = setInterval(() => {
       getUserOrders();

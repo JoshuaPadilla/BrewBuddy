@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { images } from "@/constants/images";
 import { useProductStore } from "@/store/useProduct";
-import { generateUniqueID, priceFormatted } from "@/helpers/utils";
+import { priceFormatted } from "@/helpers/utils";
 import QuatityButton from "./quantity_button";
 import RadioButtonGroup from "./radio_button_group";
 import { ADD_ONS, SIZES, SWEETNESS } from "@/constants/cart_constants";
@@ -95,7 +95,7 @@ const BottomSheetComponent = ({ onSubmit }: Props) => {
         <View className="flex-row gap-4 ">
           <View className="size-40 rounded-lg overflow-hidden">
             <Image
-              source={images.p1}
+              source={selectedProduct?.productImageUrl}
               contentFit="cover"
               key={selectedProduct?.productName}
               style={{ width: "100%", height: "100%" }}
