@@ -23,6 +23,8 @@ import logout_icon from "@/assets/icons/util_icons/logout_icon.png";
 import edit_profile from "@/assets/icons/util_icons/edit_profile.png";
 import caret_right from "@/assets/icons/util_icons/caret_right.png";
 import plus_icon from "@/assets/icons/util_icons/plus_icon.png";
+import sort_icon from "@/assets/icons/util_icons/sort_icon.png";
+import edit_icon from "@/assets/icons/util_icons/edit_icon.png";
 
 import inventory_icon from "@/assets/icons/tab_icons/inventory_icon.png";
 import orders_icon from "@/assets/icons/tab_icons/orders_icon.png";
@@ -58,6 +60,8 @@ interface UtilIconsProps {
   edit_profile: ImageSourcePropType;
   caret_right: ImageSourcePropType;
   plus_icon: ImageSourcePropType;
+  sort_icon: ImageSourcePropType;
+  edit_icon: ImageSourcePropType;
 }
 
 export const util_icons: UtilIconsProps = {
@@ -80,6 +84,8 @@ export const util_icons: UtilIconsProps = {
   edit_profile,
   caret_right,
   plus_icon,
+  sort_icon,
+  edit_icon,
 };
 
 export const tab_icons: TabIconsProps = {

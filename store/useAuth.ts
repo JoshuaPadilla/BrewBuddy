@@ -3,7 +3,6 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Alert } from "react-native";
-import { useCartStore } from "./useCart";
 
 interface StoreState {
   authUser: User | null;
@@ -45,7 +44,7 @@ export const useAuthStore = create<StoreState>((set) => ({
         set({ authUser: data.user });
         await AsyncStorage.setItem("token", data.token);
 
-        router.replace("/(tabs)/home");
+        router.replace("/(auth_screens)/(tabs)/home");
       } else {
         Alert.alert(`${data.message}`);
       }

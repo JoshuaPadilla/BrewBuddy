@@ -76,3 +76,18 @@ declare interface OrderForm {
   totalPrice: number;
   customerNote?: string;
 }
+
+declare interface InventoryItem {
+  _id: string;
+  name: string;
+  quantity: number;
+  unitOfMeasurement: "kg" | "liters" | "number";
+  status: "low" | "out" | "in";
+}
+
+declare interface InventoryItemForm {
+  name: string;
+  quantity: number;
+  unitOfMeasurement?: "kg" | "liters" | "number";
+  status?: "low" | "out" | "in";
+}

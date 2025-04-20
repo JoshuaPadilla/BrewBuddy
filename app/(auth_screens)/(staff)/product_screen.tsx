@@ -9,9 +9,9 @@ import ProductInventoryCard from "@/components/staff_components/product_inventor
 const ProductScreen = () => {
   const { products } = useProductStore();
   return (
-    <SafeAreaView className="flex-1 py-8 bg-primary-100">
+    <SafeAreaView className="flex-1 py-6 bg-primary-100">
       {/* headigns */}
-      <View className="flex-row justify-between pt-6 px-6">
+      <View className="flex-row justify-between px-6">
         <Text className="font-poppins-medium text-white text-3xl">Product</Text>
 
         <CustomButton
@@ -32,7 +32,7 @@ const ProductScreen = () => {
         </Text>
       </View>
 
-      <View className="rounded-t-[40px] bg-background mt-2 px-4 py-8 overflow-visible">
+      <View className="rounded-t-[20px] bg-background mt-2 px-4 py-8 overflow-visible">
         <ScrollView
           contentContainerClassName="pb-[150px] gap-4 p-2"
           showsVerticalScrollIndicator={false}
