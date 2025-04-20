@@ -1,12 +1,15 @@
 import { View, Text, Platform, ScrollView } from "react-native";
-import React, { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
 import { useInventoryStore } from "@/store/inventoryStore";
 import InventoryCard from "@/components/staff_components/inventory_card";
+import NewInventoryItemModal from "@/components/staff_components/new_inventory_item_modal";
 
 const InventoryScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { getAllItems, inventoryItems } = useInventoryStore();
 
   useEffect(() => {
@@ -25,8 +28,15 @@ const InventoryScreen = () => {
     return currItem.status === "low" ? acc + 1 : acc;
   }, 0);
 
+  const handleAddItem = () => {};
+
   return (
     <SafeAreaView className="flex-1 bg-primary-100">
+      <NewInventoryItemModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+
       {/* headigns */}
       <View className="items py-6 px-6">
         <View className="flex-row justify-between  mb-16">
@@ -40,6 +50,7 @@ const InventoryScreen = () => {
             btnClassname="flex-row gap-2 items-center px-4 py-2 rounded-xl"
             textClassname="font-poppins-semibold text-white"
             iconSize="size-4"
+            onPress={() => setModalVisible(true)}
           />
         </View>
 
