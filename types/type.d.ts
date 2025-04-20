@@ -81,13 +81,13 @@ declare interface InventoryItem {
   _id: string;
   name: string;
   quantity: number;
-  unitOfMeasurement: "kg" | "liters" | "number";
+  unitOfMeasurement: "kg" | "liters" | "pcs";
   status: "low" | "out" | "in";
 }
 
 declare interface InventoryItemForm {
   name: string;
   quantity: number;
-  unitOfMeasurement?: "kg" | "liters" | "number";
+  unitOfMeasurement?: "kg" | "liters" | "pcs" | string;
   status?: "low" | "out" | "in";
 }

@@ -1,21 +1,61 @@
-import { View, Text, Modal, ScrollView, TextInput } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Modal, ScrollView, TextInput, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../custom_button";
 import { util_icons } from "@/constants/icons";
 import Dropdown from "../dropdown";
+import { useInventoryStore } from "@/store/useInventory";
 
 interface ModalComponentProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
+  action?: string;
 }
 
 const NewInventoryItemModal = ({
   modalVisible,
   setModalVisible,
+  action,
 }: ModalComponentProps) => {
-  const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState("0");
-  const [unit, setUnit] = useState("pcs");
+  const { addItem, selectedItem, setSelectedItem, editItem } =
+    useInventoryStore();
+
+  const [form, setForm] = useState<InventoryItemForm>({
+    name: selectedItem?.name || "",
+    quantity: selectedItem?.quantity || 0,
+    unitOfMeasurement: selectedItem?.unitOfMeasurement || "pcs",
+  });
+
+  const resetForm = () => {
+    setForm({
+      name: "",
+      quantity: 0,
+      unitOfMeasurement: "pcs",
+    });
+  };
+
+  const handleCloseModal = () => {
+    setSelectedItem(null);
+    setModalVisible(false);
+    resetForm();
+  };
+
+  const handleSubmit = () => {
+    if (!form.name) Alert.alert("inventory item must have a name");
+
+    action === "edit" ? editItem(selectedItem?._id || "", form) : addItem(form);
+
+    handleCloseModal();
+  };
+
+  useEffect(() => {
+    if (selectedItem) {
+      setForm({
+        name: selectedItem.name || "",
+        quantity: selectedItem.quantity || 0,
+        unitOfMeasurement: selectedItem.unitOfMeasurement || "pcs",
+      });
+    }
+  }, [selectedItem]);
 
   return (
     <Modal
@@ -25,17 +65,18 @@ const NewInventoryItemModal = ({
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}
+      className="absolute"
     >
       <View className="flex-1 justify-center items-center bg-black-100/70 p-6 overflow-hidden">
         <View className="bg-white w-full rounded-lg px-6 pt-6 pb-10 max-h-[70%] overflow-hidden">
           <View className="flex-row justify-between">
             <Text className="font-poppins-bold text-xl text-black-100 mb-6 self-start">
-              New Medication
+              New Item
             </Text>
 
             <CustomButton
               iconLeft={util_icons.cancel_icon}
-              onPress={() => setModalVisible(false)}
+              onPress={handleCloseModal}
               iconSize="size-6"
             />
           </View>
@@ -53,9 +94,11 @@ const NewInventoryItemModal = ({
               <View className="">
                 <TextInput
                   className="border border-primary-100 rounded-lg p-4"
-                  value={name}
+                  value={form.name}
                   multiline
-                  onChangeText={setName}
+                  onChangeText={(value) =>
+                    setForm((prev) => (prev = { ...prev, name: value }))
+                  }
                 />
               </View>
             </View>
@@ -70,10 +113,14 @@ const NewInventoryItemModal = ({
                 <View className="">
                   <TextInput
                     className="border border-primary-100 rounded-lg p-4"
-                    value={quantity}
+                    value={form.quantity.toString()}
                     multiline
                     keyboardType="numeric"
-                    onChangeText={setQuantity}
+                    onChangeText={(value) =>
+                      setForm(
+                        (prev) => (prev = { ...prev, quantity: Number(value) })
+                      )
+                    }
                   />
                 </View>
               </View>
@@ -84,11 +131,16 @@ const NewInventoryItemModal = ({
                 </Text>
                 <Dropdown
                   data={["kg", "liters", "pcs"]}
-                  onSelect={(selectedItem) => setUnit(selectedItem)}
+                  onSelect={(selectedItem) =>
+                    setForm(
+                      (prev) =>
+                        (prev = { ...prev, unitOfMeasurement: selectedItem })
+                    )
+                  }
                   title="Unit"
                   iconLeft={util_icons.dropdown_icon}
                   height={250}
-                  defaultValue={unit}
+                  defaultValue={form.unitOfMeasurement}
                 />
               </View>
             </View>
@@ -97,7 +149,7 @@ const NewInventoryItemModal = ({
               title="Add Item"
               btnClassname="justify-center items-center bg-primary-100 rounded-lg p-4 mt-4"
               textClassname="text-white font-poppins-semibold text-lg"
-              // onPress={handleAddRestriction}
+              onPress={handleSubmit}
             />
           </ScrollView>
         </View>

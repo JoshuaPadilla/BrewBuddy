@@ -1,16 +1,25 @@
-import { View, Text, Platform, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Platform,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
-import { useInventoryStore } from "@/store/inventoryStore";
+import { useInventoryStore } from "@/store/useInventory";
 import InventoryCard from "@/components/staff_components/inventory_card";
 import NewInventoryItemModal from "@/components/staff_components/new_inventory_item_modal";
 
 const InventoryScreen = () => {
+  const actionRef = useRef("");
+
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { getAllItems, inventoryItems } = useInventoryStore();
+  const { getAllItems, inventoryItems, isAdding, setSelectedItem, isLoading } =
+    useInventoryStore();
 
   useEffect(() => {
     getAllItems();
@@ -28,13 +37,23 @@ const InventoryScreen = () => {
     return currItem.status === "low" ? acc + 1 : acc;
   }, 0);
 
-  const handleAddItem = () => {};
+  const handleOnEditItem = (item: InventoryItem) => {
+    actionRef.current = "edit";
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
+
+  const handleAddItem = () => {
+    actionRef.current = "add";
+    setModalVisible(true);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-primary-100">
       <NewInventoryItemModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        action={actionRef.current}
       />
 
       {/* headigns */}
@@ -50,7 +69,7 @@ const InventoryScreen = () => {
             btnClassname="flex-row gap-2 items-center px-4 py-2 rounded-xl"
             textClassname="font-poppins-semibold text-white"
             iconSize="size-4"
-            onPress={() => setModalVisible(true)}
+            onPress={handleAddItem}
           />
         </View>
 
@@ -83,6 +102,7 @@ const InventoryScreen = () => {
         </View>
       </View>
 
+      {/* List */}
       <View className="flex-1 bg-background px-6 pb-[50px]">
         {/* headings */}
         <View className="flex-row justify-between items-center mt-14 mb-8">
@@ -104,8 +124,19 @@ const InventoryScreen = () => {
           contentContainerClassName="gap-1"
           showsVerticalScrollIndicator={false}
         >
-          {inventoryItems.map((item, index) => (
-            <InventoryCard item={item} key={index} />
+          {(isAdding || isLoading) && (
+            <ActivityIndicator
+              className="p-16"
+              color="#73C088"
+              size={"large"}
+            />
+          )}
+          {inventoryItems.reverse().map((item, index) => (
+            <InventoryCard
+              item={item}
+              key={index}
+              onEditPress={() => handleOnEditItem(item)}
+            />
           ))}
         </ScrollView>
       </View>
