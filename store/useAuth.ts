@@ -6,6 +6,7 @@ import { Alert } from "react-native";
 
 interface StoreState {
   authUser: User | null;
+  isAdmin: boolean;
   isLoggingIn: boolean;
   isLoading: boolean;
   isRegistering: boolean;
@@ -20,6 +21,7 @@ interface StoreState {
 
 export const useAuthStore = create<StoreState>((set) => ({
   authUser: null,
+  isAdmin: false,
   isLoggingIn: false,
   isRegistering: false,
   isCheckingAuth: false,
@@ -74,6 +76,10 @@ export const useAuthStore = create<StoreState>((set) => ({
 
         set({ authUser: data.user });
         await AsyncStorage.setItem("token", data.token);
+
+        if (data.user.role === "admin") {
+          set({ isAdmin: true });
+        }
       } else {
         Alert.alert("Login Failed, try again");
       }
@@ -151,6 +157,10 @@ export const useAuthStore = create<StoreState>((set) => ({
 
       if (data.user) {
         set({ authUser: data.user });
+
+        if (data.user.role === "admin") {
+          set({ isAdmin: true });
+        }
 
         // Import usePetStore at the top of the file and use it here
         // to fetch pets after successful signin

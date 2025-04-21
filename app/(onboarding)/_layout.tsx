@@ -11,9 +11,10 @@ const AuthLayout = () => {
     fetchAllProducts();
   }, []);
 
-  if (authUser?.role === "user") return <Redirect href="/(tabs)/home" />;
+  if (authUser?.role === "user")
+    return <Redirect href="/(auth_screens)/(tabs)/home" />;
   if (authUser?.role === "admin")
-    return <Redirect href="/(staff)/orders_screen" />;
+    return <Redirect href="/(auth_screens)/(staff)/orders_screen" />;
 
   return (
     <Stack>

@@ -43,3 +43,7 @@ export const goToEditProfile = () => {
 export const goToViewProduct = () => {
   router.push("/(auth_screens)/(utility_screens)/view_product");
 };
+
+export const goToCart = () => {
+  router.push("/(auth_screens)/(tabs)/cart");
+};

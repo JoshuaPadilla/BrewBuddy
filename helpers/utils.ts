@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
 import moment from "moment";
+import { Toast } from "react-native-toast-notifications";
+import { tab_icons, util_icons } from "@/constants/icons";
 
 export const isRegistrationFormValid = (form: RegistrationForm) => {
   if (
@@ -56,4 +58,13 @@ export const dateTimeFormatted = (dateString: string): string => {
   const momentObject = moment(dateString);
 
   return momentObject.format("MMMM DD hh:mm A");
+};
+
+export const showToast = (message: string, toastType: string) => {
+  Toast.show(message, {
+    type: toastType,
+    duration: 2000,
+    animationType: "zoom-in",
+    placement: "top",
+  });
 };

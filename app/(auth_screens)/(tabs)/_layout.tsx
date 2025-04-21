@@ -1,5 +1,6 @@
 import { tab_icons } from "@/constants/icons";
 import { useAuthStore } from "@/store/useAuth";
+import { useCartStore } from "@/store/useCart";
 import { Redirect, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
@@ -8,34 +9,45 @@ const TabIcon = ({
   focused,
   icon,
   title,
+  indicatorNumber,
 }: {
   focused: boolean;
   icon?: any;
   title: string;
-}) => (
-  <View className="flex-1 mt-3 flex flex-col items-center">
-    {icon && (
-      <Image
-        source={icon}
-        tintColor={focused ? "#73C088" : "#666876"}
-        resizeMode="contain"
-        className="size-6"
-      />
-    )}
-    <Text
-      className={`${
-        focused
-          ? "text-primary-100 font-poppins-medium"
-          : "text-black-200 font-poppins-regular"
-      } text-xs w-full text-center mt-1`}
-    >
-      {title}
-    </Text>
-  </View>
-);
+  indicatorNumber?: number;
+}) => {
+  return (
+    <View className="flex-1 mt-3 flex flex-col items-center">
+      {!focused && indicatorNumber ? (
+        <Text className="font-poppins-bold text-xs absolute -right-2 bg-blue-400 px-2 rounded-full -top-2 text-white z-10">
+          {indicatorNumber}
+        </Text>
+      ) : null}
+
+      {icon && (
+        <Image
+          source={icon}
+          tintColor={focused ? "#73C088" : "#666876"}
+          resizeMode="contain"
+          className="size-6"
+        />
+      )}
+      <Text
+        className={`${
+          focused
+            ? "text-primary-100 font-poppins-medium"
+            : "text-black-200 font-poppins-regular"
+        } text-xs w-full text-center mt-1`}
+      >
+        {title}
+      </Text>
+    </View>
+  );
+};
 
 export default function TabLayout() {
   const { authUser } = useAuthStore();
+  const { cart } = useCartStore();
 
   if (!authUser) return <Redirect href="/(onboarding)/welcome" />;
   return (
@@ -96,6 +108,7 @@ export default function TabLayout() {
                 icon={tab_icons.tab_cart}
                 focused={focused}
                 title="Cart"
+                indicatorNumber={cart.length}
               />
             ),
           }}

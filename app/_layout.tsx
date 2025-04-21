@@ -8,9 +8,11 @@ import "react-native-reanimated";
 import "./globals.css";
 import { images } from "@/constants/images";
 import React from "react";
-import { Dimensions, ScrollView, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/useAuth";
+import { ToastProvider } from "react-native-toast-notifications";
+import ToastSuccessIcon from "@/components/success_icon";
+import ToastDangerIcon from "@/components/danger_icon";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -44,12 +46,22 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style="auto" backgroundColor="#73C088" translucent />
-      <Stack>
-        <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth_screens)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <ToastProvider
+        successColor="#73C088"
+        dangerColor="#F75555"
+        successIcon={<ToastSuccessIcon />}
+        dangerIcon={<ToastDangerIcon />}
+      >
+        <StatusBar style="auto" backgroundColor="#73C088" translucent />
+        <Stack>
+          <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(auth_screens)"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ToastProvider>
     </>
   );
 }

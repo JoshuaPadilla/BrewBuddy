@@ -15,7 +15,7 @@ interface Props {
 }
 
 const BottomSheetComponent = ({ onSubmit }: Props) => {
-  const { selectedProduct, setSelectedProduct } = useProductStore();
+  const { selectedProduct } = useProductStore();
   const { addToCart } = useCartStore();
 
   const [orderItem, setOrderItem] = useState<OrderItemForm>({

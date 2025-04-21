@@ -1,5 +1,6 @@
 import { tab_icons } from "@/constants/icons";
 import { useAuthStore } from "@/store/useAuth";
+import { useOrderStore } from "@/store/useOrders";
 import { Redirect, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -9,12 +10,19 @@ const TabIcon = ({
   focused,
   icon,
   title,
+  indicatorNumber,
 }: {
   focused: boolean;
   icon?: any;
   title: string;
+  indicatorNumber?: number;
 }) => (
   <View className="flex-1 mt-3 flex flex-col items-center">
+    {indicatorNumber && !focused ? (
+      <Text className="font-poppins-bold text-xs absolute -right-2 bg-blue-400 px-2 rounded-full -top-2 text-white z-10">
+        {indicatorNumber}
+      </Text>
+    ) : null}
     {icon && (
       <Image
         source={icon}
@@ -36,6 +44,8 @@ const TabIcon = ({
 );
 
 export default function StaffTabLayout() {
+  const { pendingOrders } = useOrderStore();
+
   const { authUser } = useAuthStore();
 
   if (!authUser) return <Redirect href="/(onboarding)/welcome" />;
@@ -65,6 +75,7 @@ export default function StaffTabLayout() {
                 icon={tab_icons.orders_icon}
                 focused={focused}
                 title="Orders"
+                indicatorNumber={pendingOrders.length}
               />
             ),
           }}

@@ -3,12 +3,22 @@ import React from "react";
 import { Image } from "expo-image";
 import CustomButton from "../custom_button";
 import { priceFormatted } from "@/helpers/utils";
+import { useProductStore } from "@/store/useProduct";
+import { goToViewProduct } from "@/helpers/router_function";
 
 interface ComponentProps {
   product: Product;
 }
 
 const ProductInventoryCard = ({ product }: ComponentProps) => {
+  const { setSelectedProduct } = useProductStore();
+
+  const handleViewProduct = () => {
+    setSelectedProduct(product);
+
+    goToViewProduct();
+  };
+
   return (
     <View className="bg-white p-4 rounded-lg flex-row gap-4 items-start h-[132px]">
       <Image
@@ -24,6 +34,7 @@ const ProductInventoryCard = ({ product }: ComponentProps) => {
           <CustomButton
             title="View"
             textClassname="font-poppins-semibold text-sm text-primary-100/70"
+            onPress={handleViewProduct}
           />
         </View>
 
