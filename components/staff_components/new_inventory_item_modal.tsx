@@ -16,7 +16,7 @@ const NewInventoryItemModal = ({
   setModalVisible,
   action,
 }: ModalComponentProps) => {
-  const { addItem, selectedItem, setSelectedItem, editItem } =
+  const { addItem, selectedItem, setSelectedItem, editItem, deleteItem } =
     useInventoryStore();
 
   const [form, setForm] = useState<InventoryItemForm>({
@@ -47,6 +47,11 @@ const NewInventoryItemModal = ({
     handleCloseModal();
   };
 
+  const handleDelete = () => {
+    deleteItem(selectedItem?._id || "");
+    handleCloseModal();
+  };
+
   useEffect(() => {
     if (selectedItem) {
       setForm({
@@ -69,16 +74,26 @@ const NewInventoryItemModal = ({
     >
       <View className="flex-1 justify-center items-center bg-black-100/70 p-6 overflow-hidden">
         <View className="bg-white w-full rounded-lg px-6 pt-6 pb-10 max-h-[70%] overflow-hidden">
+          {/* headings */}
           <View className="flex-row justify-between">
             <Text className="font-poppins-bold text-xl text-black-100 mb-6 self-start">
-              New Item
+              {action === "edit" ? "Edit Item" : "Add Item"}
             </Text>
 
-            <CustomButton
-              iconLeft={util_icons.cancel_icon}
-              onPress={handleCloseModal}
-              iconSize="size-6"
-            />
+            <View className="flex-row gap-3">
+              {action === "edit" && (
+                <CustomButton
+                  iconLeft={util_icons.trash_icon}
+                  onPress={handleDelete}
+                  iconSize="size-6"
+                />
+              )}
+              <CustomButton
+                iconLeft={util_icons.cancel_icon}
+                onPress={handleCloseModal}
+                iconSize="size-6"
+              />
+            </View>
           </View>
 
           <ScrollView
@@ -146,7 +161,7 @@ const NewInventoryItemModal = ({
             </View>
 
             <CustomButton
-              title="Add Item"
+              title={action === "edit" ? "Save Item" : "Add Item"}
               btnClassname="justify-center items-center bg-primary-100 rounded-lg p-4 mt-4"
               textClassname="text-white font-poppins-semibold text-lg"
               onPress={handleSubmit}

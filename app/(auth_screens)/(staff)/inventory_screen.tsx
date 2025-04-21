@@ -12,9 +12,13 @@ import { util_icons } from "@/constants/icons";
 import { useInventoryStore } from "@/store/useInventory";
 import InventoryCard from "@/components/staff_components/inventory_card";
 import NewInventoryItemModal from "@/components/staff_components/new_inventory_item_modal";
+import TabbedFilter from "@/components/tabbed_filter";
+import { INVENTORY_FILTER } from "@/constants/filters";
 
 const InventoryScreen = () => {
   const actionRef = useRef("");
+
+  const [filter, setFilter] = useState("All");
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -24,6 +28,11 @@ const InventoryScreen = () => {
   useEffect(() => {
     getAllItems();
   }, []);
+
+  const filteredInventoryItems =
+    filter === "All"
+      ? inventoryItems
+      : inventoryItems.filter((item) => item.status === filter);
 
   const outOfStockItem = inventoryItems.reduce((acc, currItem) => {
     return currItem.status === "out" ? acc + 1 : acc;
@@ -120,6 +129,15 @@ const InventoryScreen = () => {
           />
         </View>
 
+        {/* filter */}
+        <View>
+          <TabbedFilter
+            filterCategory={INVENTORY_FILTER}
+            setValue={setFilter}
+            value={filter}
+          />
+        </View>
+
         <ScrollView
           contentContainerClassName="gap-1"
           showsVerticalScrollIndicator={false}
@@ -131,7 +149,7 @@ const InventoryScreen = () => {
               size={"large"}
             />
           )}
-          {inventoryItems.reverse().map((item, index) => (
+          {filteredInventoryItems.reverse().map((item, index) => (
             <InventoryCard
               item={item}
               key={index}

@@ -6,7 +6,7 @@ import { textShortener } from "@/helpers/utils";
 import CustomButton from "./custom_button";
 import { util_icons } from "@/constants/icons";
 import { useAuthStore } from "@/store/useAuth";
-import { goToLogin } from "@/helpers/router_function";
+import { goToLogin, goToViewProduct } from "@/helpers/router_function";
 import { Image } from "expo-image";
 import { blurhash } from "@/constants";
 
@@ -23,8 +23,8 @@ const ProductCard = ({ product, onAddToCartPress }: ProductCardProps) => {
     if (!authUser) {
       return goToLogin();
     }
-
     setSelectedProduct(product);
+    goToViewProduct();
   };
 
   const handleAddToCart = () => {

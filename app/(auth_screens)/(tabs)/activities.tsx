@@ -22,6 +22,8 @@ const Activities = () => {
           (order) => order.status !== "pending" && order.status !== "processing"
         );
   useEffect(() => {
+    getUserOrders();
+
     const intervalId = setInterval(() => {
       getUserOrders();
     }, 5000); // 5000 milliseconds = 5 seconds

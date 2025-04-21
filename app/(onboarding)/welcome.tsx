@@ -41,76 +41,93 @@ const Welcome = () => {
   return (
     <SafeAreaView className="flex-1">
       <ScrollView className="pb-[100px]" showsVerticalScrollIndicator={false}>
-        <View
-          className={`bg-primary-100 items-center pt-10`}
-          style={{ height: totalScreenHeight * 0.55 }}
-        >
-          {/* Headings */}
-          <View className="items-center justify-center">
-            <Text className="font-jomhuria-regular text-7xl text-white">
-              BrewBuddy
-            </Text>
-            {/* Image */}
-            <View className="shadow drop-shadow-2xl ">
-              <Image
-                source={images.banner}
-                contentFit="contain"
-                style={{
-                  width: totalScreenWidth,
-                  height: 250,
-                  borderRadius: 30,
-                }}
-              />
-            </View>
-          </View>
-
-          {/* main */}
-          <View className="bg-white h-60 w-5/6 absolute -bottom-32 rounded-2xl p-4 shadow">
-            {/* text */}
-            <View className="items-center gap-[-20px]">
-              <Text
-                className="font-jomhuria-regular text-primary-100 "
-                style={{ fontSize: 32, margin: 0, padding: 0, lineHeight: 25 }}
-              >
-                Welcome To
+        <View className="bg-primary-100 pt-20">
+          <View
+            className={`bg-primary-100 items-center pt-10`}
+            style={{ height: totalScreenHeight * 0.55 }}
+          >
+            {/* Headings */}
+            <View className="items-center justify-center">
+              <Text className="font-jomhuria-regular text-7xl text-white">
+                BrewBuddy
               </Text>
-              <Text
-                className="font-jomhuria-regular"
-                style={{ fontSize: 48, margin: 0, padding: 0, lineHeight: 40 }}
-              >
-                BREW BUDDY
-              </Text>
-              <Text
-                className="font-judson-italic"
-                style={{ fontSize: 16, margin: 0, padding: 0, lineHeight: 15 }}
-              >
-                Brewing Happiness, Just for you
-              </Text>
-            </View>
-
-            {/* tab */}
-            <View className="items-center mt-4">
-              <View className="rounded-full w-[80%] h-[50px] bg-primary-200 overflow-hidden flex-row justify-between">
-                <View className="items-center justify-center h-full w-[50%] bg-primary-100 rounded-full">
-                  <Text className="font-poppins-medium text-white text-sm">
-                    SELF PICK-UP
-                  </Text>
-                </View>
-
-                <View className="items-center justify-center h-full w-[50%] bg-primary-200 rounded-full">
-                  <Text className="font-poppins-medium text-primary-100 text-sm">
-                    DELIVERY
-                  </Text>
-                </View>
+              {/* Image */}
+              <View className="shadow drop-shadow-2xl ">
+                <Image
+                  source={images.banner}
+                  contentFit="contain"
+                  style={{
+                    width: totalScreenWidth,
+                    height: 250,
+                    borderRadius: 30,
+                  }}
+                />
               </View>
             </View>
 
-            <View className="flex-row gap-2 items-center justify-center mt-3">
-              <RNImage source={util_icons.clock} className="size-8" />
+            {/* main */}
+            <View className="bg-white h-60 w-5/6 absolute -bottom-32 rounded-2xl p-4 shadow">
+              {/* text */}
+              <View className="items-center gap-[-20px]">
+                <Text
+                  className="font-jomhuria-regular text-primary-100 "
+                  style={{
+                    fontSize: 32,
+                    margin: 0,
+                    padding: 0,
+                    lineHeight: 25,
+                  }}
+                >
+                  Welcome To
+                </Text>
+                <Text
+                  className="font-jomhuria-regular"
+                  style={{
+                    fontSize: 48,
+                    margin: 0,
+                    padding: 0,
+                    lineHeight: 40,
+                  }}
+                >
+                  BREW BUDDY
+                </Text>
+                <Text
+                  className="font-judson-italic"
+                  style={{
+                    fontSize: 16,
+                    margin: 0,
+                    padding: 0,
+                    lineHeight: 15,
+                  }}
+                >
+                  Brewing Happiness, Just for you
+                </Text>
+              </View>
 
-              <Text className="font-poppins-semibold text-black-100 text-sm">
-                Self pick-up: ASAP (15-30 mins)
-              </Text>
+              {/* tab */}
+              <View className="items-center mt-4">
+                <View className="rounded-full w-[80%] h-[50px] bg-primary-200 overflow-hidden flex-row justify-between">
+                  <View className="items-center justify-center h-full w-[50%] bg-primary-100 rounded-full">
+                    <Text className="font-poppins-medium text-white text-sm">
+                      SELF PICK-UP
+                    </Text>
+                  </View>
+
+                  <View className="items-center justify-center h-full w-[50%] bg-primary-200 rounded-full">
+                    <Text className="font-poppins-medium text-primary-100 text-sm">
+                      DELIVERY
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View className="flex-row gap-2 items-center justify-center mt-3">
+                <RNImage source={util_icons.clock} className="size-8" />
+
+                <Text className="font-poppins-semibold text-black-100 text-sm">
+                  Self pick-up: ASAP (15-30 mins)
+                </Text>
+              </View>
             </View>
           </View>
         </View>

@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { useCartStore } from "@/store/useCart";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,7 +17,7 @@ import { useOrderStore } from "@/store/useOrders";
 
 const Checkout = () => {
   const { selectedItems, removeItem, setSelectedItems } = useCartStore();
-  const { createOrder } = useOrderStore();
+  const { createOrder, isCreating } = useOrderStore();
 
   let total = selectedItems.reduce((acc, currItem) => {
     return (acc += currItem.itemTotalPrice);
@@ -51,31 +57,36 @@ const Checkout = () => {
         contentContainerClassName="pb-[100px] gap-1"
         showsVerticalScrollIndicator={false}
       >
+        {isCreating && (
+          <ActivityIndicator className="p-16" color="#73C088" size={"large"} />
+        )}
         {selectedItems.map((item) => (
           <CheckoutItemCard item={item} key={item._id} />
         ))}
       </ScrollView>
 
-      <View className="flex-row bg-white absolute w-full px-6 py-8 bottom-0 self-center rounded-xl justify-between">
-        <View>
-          <Text className="font-poppins-regular text-black-300 text-sm">
-            Total:
-          </Text>
-          <Text className="font-poppins-bold text-primary-100 text-2xl">
-            {priceFormatted(total)}
-          </Text>
-        </View>
+      {!isCreating && (
+        <View className="flex-row bg-white absolute w-full px-6 py-8 bottom-0 self-center rounded-xl justify-between">
+          <View>
+            <Text className="font-poppins-regular text-black-300 text-sm">
+              Total:
+            </Text>
+            <Text className="font-poppins-bold text-primary-100 text-2xl">
+              {priceFormatted(total)}
+            </Text>
+          </View>
 
-        <TouchableOpacity
-          className="bg-primary-100 py-2 px-4 rounded-lg items-center justify-center"
-          onPress={handleOnSubmitOrder}
-        >
-          <Text className="font-poppins-medium text-white text-lg">
-            Place Order ({selectedItems.length}{" "}
-            {selectedItems.length > 1 ? "items" : "item"})
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            className="bg-primary-100 py-2 px-4 rounded-lg items-center justify-center"
+            onPress={handleOnSubmitOrder}
+          >
+            <Text className="font-poppins-medium text-white text-lg">
+              Place Order ({selectedItems.length}{" "}
+              {selectedItems.length > 1 ? "items" : "item"})
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

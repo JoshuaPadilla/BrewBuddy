@@ -13,6 +13,7 @@ interface StoreState {
   getAllItems: () => void;
   addItem: (form: InventoryItemForm) => void;
   editItem: (itemID: string, form: InventoryItemForm) => void;
+  deleteItem: (itemID: string) => void;
   setSelectedItem: (item: InventoryItem | null) => void;
 }
 
@@ -100,6 +101,37 @@ export const useInventoryStore = create<StoreState>((set) => ({
           inventoryItems: [
             ...state.inventoryItems.filter((item) => item._id !== itemID),
             data.updateItem,
+          ],
+        }));
+      } else {
+        Alert.alert("failed to add new inventory item");
+      }
+    } catch (error) {
+      console.log("adding inventory items: ", error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  deleteItem: async (itemID) => {
+    try {
+      set({ isLoading: true });
+
+      const token = await AsyncStorage.getItem("token");
+      const res = await fetch(`${BASE_URL}/inventory/${itemID}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json", // Add this line
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.status === "success") {
+        set((state) => ({
+          inventoryItems: [
+            ...state.inventoryItems.filter((item) => item._id !== itemID),
           ],
         }));
       } else {

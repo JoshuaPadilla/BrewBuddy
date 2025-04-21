@@ -12,13 +12,13 @@ const InventoryCard = ({ item, onEditPress }: ComponentProps) => {
   let borderColor;
 
   switch (item.status) {
-    case "low":
+    case "out":
       borderColor = "#F75555";
       break;
     case "in":
       borderColor = "#73C088";
       break;
-    case "out":
+    case "low":
       borderColor = "#ffcc80";
       break;
     default:
@@ -43,6 +43,9 @@ const InventoryCard = ({ item, onEditPress }: ComponentProps) => {
 
           <Text className="font-poppins-bold text-black-100">
             {item.quantity}
+          </Text>
+          <Text className="font-poppins-medium text-black-100/80">
+            ({item.unitOfMeasurement})
           </Text>
         </View>
       </View>

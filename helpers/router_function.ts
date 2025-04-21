@@ -39,3 +39,7 @@ export const goToHelpCenter = () => {
 export const goToEditProfile = () => {
   router.push("/(auth_screens)/(utility_screens)/edit_profile");
 };
+
+export const goToViewProduct = () => {
+  router.push("/(auth_screens)/(utility_screens)/view_product");
+};
