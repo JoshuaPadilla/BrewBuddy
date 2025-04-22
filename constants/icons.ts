@@ -28,6 +28,8 @@ import edit_icon from "@/assets/icons/util_icons/edit_icon.png";
 import cancel_icon from "@/assets/icons/util_icons/cancel.png";
 import success_icon from "@/assets/icons/util_icons/success_icon.png";
 import danger_icon from "@/assets/icons/util_icons/danger_icon.png";
+import edit_pic_icon from "@/assets/icons/util_icons/edit_pic_icon.png";
+import add_picture_icon from "@/assets/icons/util_icons/add_picture_icon.png";
 
 import inventory_icon from "@/assets/icons/tab_icons/inventory_icon.png";
 import orders_icon from "@/assets/icons/tab_icons/orders_icon.png";
@@ -44,6 +46,8 @@ interface TabIconsProps {
 }
 
 interface UtilIconsProps {
+  add_picture_icon: ImageSourcePropType;
+  edit_pic_icon: ImageSourcePropType;
   danger_icon: ImageSourcePropType;
   success_icon: ImageSourcePropType;
   cancel_icon: ImageSourcePropType;
@@ -71,6 +75,8 @@ interface UtilIconsProps {
 }
 
 export const util_icons: UtilIconsProps = {
+  add_picture_icon,
+  edit_pic_icon,
   success_icon,
   cancel_icon,
   clock,

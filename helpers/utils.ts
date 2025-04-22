@@ -2,6 +2,7 @@ import { Alert } from "react-native";
 import moment from "moment";
 import { Toast } from "react-native-toast-notifications";
 import { tab_icons, util_icons } from "@/constants/icons";
+import ProductForm from "@/app/(auth_screens)/(utility_screens)/product_form";
 
 export const isRegistrationFormValid = (form: RegistrationForm) => {
   if (
@@ -67,4 +68,33 @@ export const showToast = (message: string, toastType: string) => {
     animationType: "zoom-in",
     placement: "top",
   });
+};
+
+export const isValidProductForm = (form: ProductForm) => {
+  if (!form.productBasePrice) {
+    showToast("Price is Required", "danger");
+    return false;
+  }
+
+  if (!form.productCategory) {
+    showToast("Select a Category", "danger");
+    return false;
+  }
+
+  if (!form.productDescription) {
+    showToast("Please provide a description", "danger");
+    return false;
+  }
+
+  if (!form.productName) {
+    showToast("Product must have a name", "danger");
+    return false;
+  }
+
+  if (!form.ProductImage) {
+    showToast("Product needs an Image", "danger");
+    return false;
+  }
+
+  return true;
 };

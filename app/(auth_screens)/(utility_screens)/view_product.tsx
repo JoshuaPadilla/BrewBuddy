@@ -18,7 +18,7 @@ import { useOrderStore } from "@/store/useOrders";
 const ViewProduct = () => {
   const { isAdmin } = useAuthStore();
 
-  const { selectedProduct } = useProductStore();
+  const { selectedProduct, deleteProduct } = useProductStore();
   const { addToCart, cart, setSelectedItems } = useCartStore();
 
   const { createOrder, isCreating } = useOrderStore();
@@ -88,6 +88,12 @@ const ViewProduct = () => {
     showToast("Added to cart", "success");
   };
 
+  const handleDeleteproduct = () => {
+    deleteProduct(selectedProduct?._id || "");
+
+    goBack();
+  };
+
   const handleOnSubmitOrder = () => {
     const orderItemForm: OrderItem = {
       addOns: orderItem.addOns,
@@ -117,7 +123,7 @@ const ViewProduct = () => {
           tintColor="#fff"
         />
 
-        {!isAdmin && (
+        {!isAdmin ? (
           <View>
             <CustomButton
               iconLeft={tab_icons.tab_cart}
@@ -130,6 +136,13 @@ const ViewProduct = () => {
               {cart.length}
             </Text>
           </View>
+        ) : (
+          <CustomButton
+            iconLeft={util_icons.trash_icon}
+            onPress={handleDeleteproduct}
+            tintColor="#F75555"
+            iconSize="size-8"
+          />
         )}
       </View>
 
@@ -144,15 +157,17 @@ const ViewProduct = () => {
       {/* Product Desc */}
       <View className="flex-1 bg-background pt-32">
         {/* Total */}
-        <View className="flex-row justify-between px-6 pt-4">
-          <Text className="font-poppins-bold text-black-100 text-2xl">
-            Total:
-          </Text>
+        {!isAdmin && (
+          <View className="flex-row justify-between px-6 pt-4">
+            <Text className="font-poppins-bold text-black-100 text-2xl">
+              Total:
+            </Text>
 
-          <Text className="font-poppins-bold text-primary-100 text-2xl">
-            {priceFormatted(orderItem.itemTotalPrice)}
-          </Text>
-        </View>
+            <Text className="font-poppins-bold text-primary-100 text-2xl">
+              {priceFormatted(orderItem.itemTotalPrice)}
+            </Text>
+          </View>
+        )}
 
         <View
           className="w-[90%] h-40 p-4 absolute -top-10 z-10 bg-white rounded-xl self-center"

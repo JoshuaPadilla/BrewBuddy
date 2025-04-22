@@ -37,6 +37,19 @@ declare interface Product {
   productImageUrl?: string;
 }
 
+declare interface ProductForm {
+  productName: string;
+  productCategory: string;
+  productBasePrice: number;
+  productDescription: string;
+  ProductImage: ImageInfo | null;
+}
+declare interface ImageInfo {
+  uri: string;
+  type: string;
+  fileName: string;
+}
+
 declare interface OrderItem {
   _id?: string;
   productID: Product;

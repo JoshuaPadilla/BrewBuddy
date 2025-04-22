@@ -1,13 +1,24 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
 import { useProductStore } from "@/store/useProduct";
 import ProductInventoryCard from "@/components/staff_components/product_inventory_card";
+import { goToAddProduct } from "@/helpers/router_function";
 
 const ProductScreen = () => {
-  const { products } = useProductStore();
+  const { products, fetchAllProducts, isLoading, isAdding, isDeleting } =
+    useProductStore();
+
+  const handleAddproduct = () => {
+    goToAddProduct();
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
+
   return (
     <SafeAreaView className="flex-1 py-6 bg-primary-100">
       {/* headigns */}
@@ -20,6 +31,7 @@ const ProductScreen = () => {
           btnClassname="flex-row gap-2 items-center px-4 py-2 rounded-xl"
           textClassname="font-poppins-semibold text-white"
           iconSize="size-4"
+          onPress={handleAddproduct}
         />
       </View>
 
@@ -32,17 +44,34 @@ const ProductScreen = () => {
         </Text>
       </View>
 
-      <View className="rounded-t-[20px] bg-background mt-2 px-4 py-8 overflow-visible">
-        <ScrollView
-          contentContainerClassName="pb-[150px] gap-4 p-2"
-          showsVerticalScrollIndicator={false}
-        >
-          {products.map((product, index) => (
-            <View className="shadow" key={index}>
-              <ProductInventoryCard product={product} />
-            </View>
-          ))}
-        </ScrollView>
+      <View className="rounded-t-[20px] bg-background mt-2 px-4 py-8 overflow-visible h-full">
+        {isLoading ? (
+          <View className="items-center justify-start p-16">
+            <ActivityIndicator
+              className="p-16"
+              color="#73C088"
+              size={"large"}
+            />
+          </View>
+        ) : (
+          <ScrollView
+            contentContainerClassName="pb-[150px] gap-4 p-2"
+            showsVerticalScrollIndicator={false}
+          >
+            {(isAdding || isDeleting) && (
+              <ActivityIndicator
+                className="p-16"
+                color="#73C088"
+                size={"large"}
+              />
+            )}
+            {products.map((product, index) => (
+              <View className="shadow" key={index}>
+                <ProductInventoryCard product={product} />
+              </View>
+            ))}
+          </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   );

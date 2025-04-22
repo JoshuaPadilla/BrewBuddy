@@ -50,6 +50,12 @@
             "./assets/fonts/Jomhuria-Regular.ttf"
           ]
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let add product image."
+        }
       ]
     ],
     "experiments": {
