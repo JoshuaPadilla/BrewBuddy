@@ -22,14 +22,27 @@ import { PRODUCT_CATEGORY } from "@/constants";
 import { isValidProductForm } from "@/helpers/utils";
 
 const ProductForm = () => {
-  const { addProduct } = useProductStore();
+  const { addProduct, action, selectedProduct, EditProduct } =
+    useProductStore();
 
   const [form, setForm] = useState<ProductForm>({
-    productBasePrice: 0,
-    productCategory: "Classic",
-    productDescription: "",
-    ProductImage: null,
-    productName: "",
+    productBasePrice:
+      action === "edit" ? selectedProduct?.productBasePrice || 0 : 0,
+    productCategory:
+      action === "edit"
+        ? selectedProduct?.productCategory || "Classic"
+        : "Classic",
+    productDescription:
+      action === "edit" ? selectedProduct?.productDescription || "" : "",
+    ProductImage:
+      action === "edit" && selectedProduct?.productImageUrl
+        ? {
+            fileName: "selected product",
+            type: "jpeg",
+            uri: selectedProduct.productImageUrl,
+          }
+        : null,
+    productName: action === "edit" ? selectedProduct?.productName || "" : "",
   });
 
   const selectImage = async () => {
@@ -71,25 +84,25 @@ const ProductForm = () => {
   const handleSubmit = () => {
     if (!isValidProductForm(form)) return;
 
-    addProduct(form);
+    action === "add"
+      ? addProduct(form)
+      : EditProduct(selectedProduct?._id || "", form);
 
     goBack();
   };
 
+  const handleBack = () => {
+    goBack();
+  };
   return (
     <SafeAreaView className="flex-1 bg-background px-6 py-8">
       {/* Headings */}
 
       <View className="flex-row justify-between items-center">
-        <CustomButton iconLeft={util_icons.back_icon} onPress={goBack} />
+        <CustomButton iconLeft={util_icons.back_icon} onPress={handleBack} />
         <Text className="font-poppins-medium text-black-100 text-m">
           New Product
         </Text>
-        <CustomButton
-          title="save"
-          onPress={goBack}
-          textClassname="font-poppins-semibold text-primary-100"
-        />
       </View>
 
       <ScrollView contentContainerClassName="pb-[400px]">
@@ -98,7 +111,7 @@ const ProductForm = () => {
           {form.ProductImage ? (
             <View className="size-60 rounded-xl overflow-hidden">
               <Image
-                source={{ uri: form.ProductImage?.uri }}
+                source={form.ProductImage?.uri}
                 style={{ width: "100%", height: "100%" }}
               />
 
@@ -189,7 +202,7 @@ const ProductForm = () => {
           />
 
           <CustomButton
-            title="Add Product"
+            title={action === "edit" ? "Save Changes" : "Add Product"}
             btnClassname="justify-center items-center bg-primary-100 rounded-lg p-4 mt-4"
             textClassname="text-white font-poppins-semibold text-lg"
             onPress={handleSubmit}

@@ -119,14 +119,14 @@ const InventoryScreen = () => {
             Inventory Items:
           </Text>
 
-          <CustomButton
+          {/* <CustomButton
             title="Sort by"
             btnClassname="flex-row items-center gap-2"
             textClassname="font-poppins-semibold text-m text-black-200/50"
             iconRight={util_icons.sort_icon}
             iconRightClassName="size-4"
             tintColor="#73C088"
-          />
+          /> */}
         </View>
 
         {/* filter */}

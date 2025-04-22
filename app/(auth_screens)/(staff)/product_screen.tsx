@@ -5,14 +5,21 @@ import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
 import { useProductStore } from "@/store/useProduct";
 import ProductInventoryCard from "@/components/staff_components/product_inventory_card";
-import { goToAddProduct } from "@/helpers/router_function";
+import { goToProductForm } from "@/helpers/router_function";
 
 const ProductScreen = () => {
-  const { products, fetchAllProducts, isLoading, isAdding, isDeleting } =
-    useProductStore();
+  const {
+    products,
+    fetchAllProducts,
+    isLoading,
+    isAdding,
+    isDeleting,
+    setAction,
+  } = useProductStore();
 
   const handleAddproduct = () => {
-    goToAddProduct();
+    setAction("add");
+    goToProductForm();
   };
 
   useEffect(() => {

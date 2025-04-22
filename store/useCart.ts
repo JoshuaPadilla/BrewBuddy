@@ -2,6 +2,7 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "@/constants";
 import { Alert } from "react-native";
+import OrderItem from "@/components/order_item";
 
 interface StoreState {
   cart: OrderItem[];
@@ -38,7 +39,11 @@ export const useCartStore = create<StoreState>((set) => ({
       const data = await res.json();
 
       if (data.status === "success") {
-        set({ cart: data.userCart });
+        set({
+          cart: data.userCart.filter(
+            (order: OrderItem) => order.productID !== null
+          ),
+        });
       } else {
         Alert.alert("failed to fetch cart item");
       }

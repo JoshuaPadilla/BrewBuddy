@@ -1,5 +1,11 @@
-import { View, Text, Platform, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Platform,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useProductStore } from "@/store/useProduct";
 import { Image } from "expo-image";
@@ -8,20 +14,27 @@ import RadioButtonGroup from "@/components/radio_button_group";
 import { ADD_ONS, SIZES, SWEETNESS } from "@/constants/cart_constants";
 import CustomButton from "@/components/custom_button";
 import { tab_icons, util_icons } from "@/constants/icons";
-import { goBack, goToCart } from "@/helpers/router_function";
+import { goBack, goToCart, goToProductForm } from "@/helpers/router_function";
 import QuatityButton from "@/components/quantity_button";
 import { useAuthStore } from "@/store/useAuth";
 import { useCartStore } from "@/store/useCart";
 import { Toast } from "react-native-toast-notifications";
 import { useOrderStore } from "@/store/useOrders";
+import TabbedSelector from "@/components/tabbed_selector";
 
 const ViewProduct = () => {
   const { isAdmin } = useAuthStore();
 
-  const { selectedProduct, deleteProduct } = useProductStore();
+  const {
+    selectedProduct,
+    deleteProduct,
+    changeAvailability,
+    isUpdating,
+    setAction,
+  } = useProductStore();
   const { addToCart, cart, setSelectedItems } = useCartStore();
 
-  const { createOrder, isCreating } = useOrderStore();
+  const { createOrder } = useOrderStore();
 
   const [orderItem, setOrderItem] = useState<OrderItemForm>({
     quantity: 1,
@@ -43,6 +56,10 @@ const ViewProduct = () => {
 
     setOrderItem((prev) => ({ ...prev, itemTotalPrice: newTotal }));
   }
+
+  const availabilityRef = useRef(
+    selectedProduct?.isAvailable ? "available" : "not available"
+  );
 
   useEffect(() => {
     calculateTotal();
@@ -114,6 +131,17 @@ const ViewProduct = () => {
     setSelectedItems([]);
   };
 
+  const handleEditProduct = () => {
+    setAction("edit");
+
+    goToProductForm();
+  };
+
+  const handleChangeAvailability = (status: string) => {
+    availabilityRef.current = status;
+    changeAvailability(selectedProduct?._id || "", status);
+  };
+
   return (
     <View className="flex-1 bg-primary-100">
       <View className="flex-row justify-between p-6 items-center absolute py-16 z-10 w-full">
@@ -123,7 +151,7 @@ const ViewProduct = () => {
           tintColor="#fff"
         />
 
-        {!isAdmin ? (
+        {!isAdmin && (
           <View>
             <CustomButton
               iconLeft={tab_icons.tab_cart}
@@ -136,13 +164,6 @@ const ViewProduct = () => {
               {cart.length}
             </Text>
           </View>
-        ) : (
-          <CustomButton
-            iconLeft={util_icons.trash_icon}
-            onPress={handleDeleteproduct}
-            tintColor="#F75555"
-            iconSize="size-8"
-          />
         )}
       </View>
 
@@ -156,7 +177,7 @@ const ViewProduct = () => {
 
       {/* Product Desc */}
       <View className="flex-1 bg-background pt-32">
-        {/* Total */}
+        {/* total of order only for customer */}
         {!isAdmin && (
           <View className="flex-row justify-between px-6 pt-4">
             <Text className="font-poppins-bold text-black-100 text-2xl">
@@ -182,7 +203,6 @@ const ViewProduct = () => {
               : { elevation: 4 }
           }
         >
-          {/* Name and base price */}
           <View className="flex-row justify-between p-2 items-baseline">
             <Text className="font-poppins-semibold text-black-100 text-2xl">
               {selectedProduct?.productName}
@@ -203,67 +223,111 @@ const ViewProduct = () => {
           contentContainerClassName="pb-[100px] show p-4"
           showsVerticalScrollIndicator={false}
         >
-          {/* options selection */}
-          <View className="px-4 py-2 gap-4">
-            {/* size */}
-            <View className="gap-4">
-              <View className="flex-row gap-2 items-center">
-                <Text className="font-poppins-medium text-black-100 text-lg">
-                  Brew Buddy size
-                </Text>
+          {/* options selection for customer and edit options for admin*/}
+          {!isAdmin ? (
+            <View className="px-4 py-2 gap-4">
+              {/* size */}
+              <View className="gap-4">
+                <View className="flex-row gap-2 items-center">
+                  <Text className="font-poppins-medium text-black-100 text-lg">
+                    Brew Buddy size
+                  </Text>
 
-                <Text className="font-poppins-regular text-black-300 text-md">
-                  (Choose one)
-                </Text>
+                  <Text className="font-poppins-regular text-black-300 text-md">
+                    (Choose one)
+                  </Text>
+                </View>
+
+                <RadioButtonGroup
+                  options={SIZES}
+                  onValueChange={(value) => handleSelectSize(value)}
+                  selectedValue={orderItem.itemSize.name}
+                />
               </View>
 
-              <RadioButtonGroup
-                options={SIZES}
-                onValueChange={(value) => handleSelectSize(value)}
-                selectedValue={orderItem.itemSize.name}
-              />
-            </View>
+              {/* Sweetness */}
+              <View className="gap-4">
+                <View className="flex-row gap-2 items-center">
+                  <Text className="font-poppins-medium text-black-100 text-lg">
+                    Taste Preference
+                  </Text>
 
-            {/* Sweetness */}
-            <View className="gap-4">
-              <View className="flex-row gap-2 items-center">
-                <Text className="font-poppins-medium text-black-100 text-lg">
-                  Taste Preference
-                </Text>
+                  <Text className="font-poppins-regular text-black-300 text-md">
+                    (optional)
+                  </Text>
+                </View>
 
-                <Text className="font-poppins-regular text-black-300 text-md">
-                  (optional)
-                </Text>
+                <RadioButtonGroup
+                  options={SWEETNESS}
+                  onValueChange={(value) =>
+                    setOrderItem((prev) => ({ ...prev, sweetnessLevel: value }))
+                  }
+                  selectedValue={orderItem.sweetnessLevel.name}
+                />
               </View>
 
-              <RadioButtonGroup
-                options={SWEETNESS}
-                onValueChange={(value) =>
-                  setOrderItem((prev) => ({ ...prev, sweetnessLevel: value }))
-                }
-                selectedValue={orderItem.sweetnessLevel.name}
-              />
+              {/* addOns */}
+              <View className="gap-4">
+                <View className="flex-row gap-2 items-center">
+                  <Text className="font-poppins-medium text-black-100 text-lg">
+                    Add Ons
+                  </Text>
+
+                  <Text className="font-poppins-regular text-black-300 text-md">
+                    (optional)
+                  </Text>
+                </View>
+
+                <RadioButtonGroup
+                  options={ADD_ONS}
+                  onValueChange={(value) => handleAddOnsSelect(value)}
+                  selectedValue={orderItem.addOns.name}
+                />
+              </View>
             </View>
-
-            {/* addOns */}
-            <View className="gap-4">
-              <View className="flex-row gap-2 items-center">
-                <Text className="font-poppins-medium text-black-100 text-lg">
-                  Add Ons
-                </Text>
-
-                <Text className="font-poppins-regular text-black-300 text-md">
-                  (optional)
-                </Text>
+          ) : isUpdating ? (
+            <ActivityIndicator
+              className="p-16"
+              color="#73C088"
+              size={"large"}
+            />
+          ) : (
+            // buttons for product actions
+            <View className="p-4 gap-4">
+              {/* for changing availability */}
+              <View className="items-center justify-center">
+                <TabbedSelector
+                  data={["available", "not available"]}
+                  onSelect={(selectedValue) =>
+                    handleChangeAvailability(selectedValue)
+                  }
+                  defaultSelected={availabilityRef.current}
+                />
               </View>
 
-              <RadioButtonGroup
-                options={ADD_ONS}
-                onValueChange={(value) => handleAddOnsSelect(value)}
-                selectedValue={orderItem.addOns.name}
-              />
+              <View>
+                {/* for editing */}
+                <CustomButton
+                  title="Edit Product"
+                  btnClassname=" flex-row gap-2 justify-center items-center bg-primary-100 rounded-lg p-4 mt-4"
+                  textClassname="text-white font-poppins-semibold text-lg"
+                  iconLeft={util_icons.edit_icon}
+                  tintColor="#fff"
+                  onPress={handleEditProduct}
+                />
+
+                {/* for deleting */}
+                <CustomButton
+                  title="Delete Product"
+                  btnClassname=" flex-row gap-2 justify-center items-center bg-primary-100 rounded-lg p-4 mt-4"
+                  textClassname="text-white font-poppins-semibold text-lg"
+                  iconLeft={util_icons.trash_icon}
+                  tintColor="#F75555"
+                  onPress={handleDeleteproduct}
+                />
+              </View>
             </View>
-          </View>
+          )}
         </ScrollView>
 
         {/* Buttons */}

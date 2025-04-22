@@ -35,6 +35,7 @@ declare interface Product {
   productBasePrice: number;
   productDescription: string;
   productImageUrl?: string;
+  isAvailable?: boolean;
 }
 
 declare interface ProductForm {

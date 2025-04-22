@@ -16,7 +16,10 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.joshua129.BrewBuddy"
+      "package": "com.joshua129.BrewBuddy",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -60,6 +63,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "edee8040-8435-4804-8074-d9491865fb04"
+      }
     }
   }
 }

@@ -16,6 +16,7 @@ import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import BottomSheetComponent from "@/components/bottomSheetContent";
 import { useCartStore } from "@/store/useCart";
 import ProductList from "@/components/product_list";
+import socket from "@/lib/socket";
 
 const HomeTab = () => {
   const sheetRef = useRef<BottomSheetMethods>(null);
@@ -25,6 +26,10 @@ const HomeTab = () => {
 
   useEffect(() => {
     fetchAllProducts();
+
+    socket.on("refreshProduct", () => {
+      fetchAllProducts();
+    });
   }, []);
 
   const classicProducts = products.filter(

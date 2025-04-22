@@ -23,48 +23,66 @@ const ProductCard = ({ product, onAddToCartPress }: ProductCardProps) => {
     if (!authUser) {
       return goToLogin();
     }
+
+    if (!product.isAvailable) return;
+
     setSelectedProduct(product);
     goToViewProduct();
   };
 
   const handleAddToCart = () => {
+    if (!product.isAvailable) return;
+
     setSelectedProduct(product);
     onAddToCartPress && onAddToCartPress();
   };
 
   return (
-    <View className="p-2 w-[48%] h-[250px] mb-4 items-center gap-2 overflow-hidden">
-      {/* product image */}
-      <TouchableOpacity
-        className="w-52 h-52 p-2 rounded-lg"
-        onPress={handleProductPress}
-      >
-        <Image
-          source={product.productImageUrl ? product.productImageUrl : undefined}
-          contentFit="cover"
-          style={{ width: "100%", height: "100%", borderRadius: 5 }}
-          placeholder={{ blurhash }}
-        />
-      </TouchableOpacity>
+    <>
+      <View className="p-2 w-[48%] h-[250px] mb-4 items-center gap-2 overflow-hidden">
+        {!product.isAvailable && (
+          <View className="flex-row absolute z-10 px-4 p-1 top-2 -left-1 bg-danger rounded-r-xl">
+            <Text className="text-white font-poppins-medium text-sm">
+              Not Available
+            </Text>
+          </View>
+        )}
+        <View className={`${!product.isAvailable && "opacity-50 "}`}>
+          {/* product image */}
+          <TouchableOpacity
+            className="w-52 h-52 p-2 rounded-lg"
+            onPress={handleProductPress}
+          >
+            <Image
+              source={
+                product.productImageUrl ? product.productImageUrl : undefined
+              }
+              contentFit="cover"
+              style={{ width: "100%", height: "100%", borderRadius: 5 }}
+              placeholder={{ blurhash }}
+            />
+          </TouchableOpacity>
 
-      {/* product name and price */}
-      <View className="flex-row justify-between w-full items-end">
-        <View>
-          <Text className="font-poppins-medium">
-            {textShortener(product.productName, 16)}
-          </Text>
-          <Text className="font-poppins-semibold text-primary-100">
-            &#8369; {product.productBasePrice.toFixed(2)}
-          </Text>
+          {/* product name and price */}
+          <View className="flex-row justify-between w-full items-end">
+            <View>
+              <Text className="font-poppins-medium">
+                {textShortener(product.productName, 16)}
+              </Text>
+              <Text className="font-poppins-semibold text-primary-100">
+                &#8369; {product.productBasePrice.toFixed(2)}
+              </Text>
+            </View>
+
+            <CustomButton
+              iconLeft={util_icons.add_to_cart_icon}
+              iconSize="size-6"
+              onPress={handleAddToCart}
+            />
+          </View>
         </View>
-
-        <CustomButton
-          iconLeft={util_icons.add_to_cart_icon}
-          iconSize="size-6"
-          onPress={handleAddToCart}
-        />
       </View>
-    </View>
+    </>
   );
 };
 

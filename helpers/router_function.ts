@@ -48,6 +48,6 @@ export const goToCart = () => {
   router.push("/(auth_screens)/(tabs)/cart");
 };
 
-export const goToAddProduct = () => {
+export const goToProductForm = () => {
   router.push("/(auth_screens)/(utility_screens)/product_form");
 };
