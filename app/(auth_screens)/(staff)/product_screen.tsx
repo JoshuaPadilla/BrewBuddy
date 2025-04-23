@@ -15,6 +15,7 @@ const ProductScreen = () => {
     isAdding,
     isDeleting,
     setAction,
+    selectedProduct,
   } = useProductStore();
 
   const handleAddproduct = () => {
@@ -24,7 +25,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     fetchAllProducts();
-  }, []);
+  }, [selectedProduct]);
 
   return (
     <SafeAreaView className="flex-1 py-6 bg-primary-100">

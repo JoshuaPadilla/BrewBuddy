@@ -21,6 +21,13 @@ const ProductInventoryCard = ({ product }: ComponentProps) => {
 
   return (
     <View className="bg-white p-4 rounded-lg flex-row gap-4 items-start h-[132px]">
+      {!product.isAvailable && (
+        <View className="flex-row absolute z-10 px-4 p-1 top-2 -left-1 bg-danger rounded-r-xl">
+          <Text className="text-white font-poppins-medium text-sm">
+            Not Available
+          </Text>
+        </View>
+      )}
       <Image
         source={product.productImageUrl}
         style={{ width: 100, height: 100, borderRadius: 5 }}

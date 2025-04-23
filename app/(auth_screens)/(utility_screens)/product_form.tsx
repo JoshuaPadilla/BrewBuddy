@@ -100,9 +100,12 @@ const ProductForm = () => {
 
       <View className="flex-row justify-between items-center">
         <CustomButton iconLeft={util_icons.back_icon} onPress={handleBack} />
-        <Text className="font-poppins-medium text-black-100 text-m">
-          New Product
+
+        <Text className="font-poppins-semibold text-black-100 text-xl">
+          {action === "add" ? "New Product" : "Edit Product"}
         </Text>
+
+        <CustomButton />
       </View>
 
       <ScrollView contentContainerClassName="pb-[400px]">

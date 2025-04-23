@@ -25,8 +25,6 @@ const CartItem = ({
   onRemove,
   onCheckout,
 }: ComponentProps) => {
-  console.log(orderItem.productID);
-
   const [selected, setSelected] = useState(false);
 
   const handleOnSelect = () => {
