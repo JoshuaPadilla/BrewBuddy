@@ -9,6 +9,7 @@ import CustomButton from "@/components/custom_button";
 import OnProcessOrderCard from "@/components/staff_components/onprocess_order_card";
 import socket from "@/lib/socket";
 import { util_icons } from "@/constants/icons";
+import { goToViewOrderDetails } from "@/helpers/router_function";
 
 const OrdersScreen = () => {
   const {
@@ -19,6 +20,7 @@ const OrdersScreen = () => {
     moveItemToProcessing,
     completeOrder,
     isCompleting,
+    setSelectedOrder,
   } = useOrderStore();
 
   useEffect(() => {
@@ -51,6 +53,12 @@ const OrdersScreen = () => {
 
   const handleOnCompleteOrder = async (orderID: string) => {
     completeOrder(orderID);
+  };
+
+  const handleViewDetails = (order: Order) => {
+    setSelectedOrder(order);
+
+    goToViewOrderDetails();
   };
 
   return (
@@ -148,6 +156,7 @@ const OrdersScreen = () => {
               order={order}
               key={index}
               onComplete={() => handleOnCompleteOrder(order._id)}
+              onViewDetails={() => handleViewDetails(order)}
             />
           ))}
         </ScrollView>

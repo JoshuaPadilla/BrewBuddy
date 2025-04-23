@@ -16,14 +16,20 @@ import { goToHome, goToLogin } from "@/helpers/router_function";
 import { useProductStore } from "@/store/useProduct";
 import { Image } from "expo-image";
 import ProductList from "@/components/product_list";
+import socket from "@/lib/socket";
 
 const Welcome = () => {
   const totalScreenHeight = Dimensions.get("screen").height;
   const totalScreenWidth = Dimensions.get("screen").width;
-  const { products, isLoading, fetchAllProducts } = useProductStore();
+  const { products, isLoading, fetchAllProducts, selectedProduct } =
+    useProductStore();
 
   useEffect(() => {
     fetchAllProducts();
+
+    socket.on("refreshProduct", () => {
+      fetchAllProducts();
+    });
   }, []);
 
   const classicProducts = products.filter(

@@ -98,3 +98,20 @@ export const isValidProductForm = (form: ProductForm) => {
 
   return true;
 };
+
+export const getOrderStatusColor = (
+  status?: "pending" | "processing" | "completed" | "cancelled"
+) => {
+  if (!status) return;
+
+  switch (status) {
+    case "completed":
+      return "#a5d6a7";
+    case "pending":
+      return "#ffcc80";
+    case "processing":
+      return "#64b5f6";
+    default:
+      return "#ffcc80";
+  }
+};

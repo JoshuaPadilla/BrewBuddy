@@ -5,12 +5,14 @@ import OrderItem from "./order_item";
 import { dateTimeFormatted, priceFormatted } from "@/helpers/utils";
 import CustomButton from "./custom_button";
 import { util_icons } from "@/constants/icons";
+import { goToViewOrder } from "@/helpers/router_function";
 
 interface ComponentProps {
   order: Order;
+  onPress: () => void;
 }
 
-const OrderActivityCard = ({ order }: ComponentProps) => {
+const OrderActivityCard = ({ order, onPress }: ComponentProps) => {
   const [showItems, setShowItems] = useState(false);
 
   return (
@@ -24,6 +26,7 @@ const OrderActivityCard = ({ order }: ComponentProps) => {
         <CustomButton
           title="See order"
           textClassname="text-primary-100/80 text-sm"
+          onPress={onPress}
         />
       </View>
 

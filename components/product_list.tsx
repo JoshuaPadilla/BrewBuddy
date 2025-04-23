@@ -16,7 +16,7 @@ const ProductList = ({
   title,
 }: ComponentProps) => {
   return (
-    <View className="items-center overflow-hidden">
+    <View className="overflow-hidden w-full">
       <Text className="font-poppins-bold text-black-100 text-2xl self-start">
         {title}
       </Text>

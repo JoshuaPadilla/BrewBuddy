@@ -11,9 +11,11 @@ interface StoreState {
   completedOrders: Order[];
   pendingOrders: Order[];
   processingOrders: Order[];
+  selectedOrder: Order | null;
   isCreating: boolean;
   isLoading: boolean;
   isCompleting: boolean;
+  setSelectedOrder: (order: Order) => void;
   createOrder: (order: OrderForm) => void;
   getUserOrders: () => void;
   getAllOrders: () => void;
@@ -30,6 +32,7 @@ export const useOrderStore = create<StoreState>((set) => ({
   pendingOrders: [],
   completedOrders: [],
   processingOrders: [],
+  selectedOrder: null,
   isCreating: false,
   isLoading: false,
   isCompleting: false,
@@ -195,5 +198,9 @@ export const useOrderStore = create<StoreState>((set) => ({
 
   addToProcessing: (order) => {
     set((state) => ({ processingOrders: [...state.processingOrders, order] }));
+  },
+
+  setSelectedOrder: (order) => {
+    set({ selectedOrder: order });
   },
 }));

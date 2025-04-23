@@ -4,11 +4,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TabSelect from "@/components/tab_select";
 import { useOrderStore } from "@/store/useOrders";
 import OrderActivityCard from "@/components/order_activity_card";
+import { goToViewOrder } from "@/helpers/router_function";
 
 const ACTIVITY_OPTIONS = ["ON GOING", "COMPLETED"];
 
 const Activities = () => {
-  const { orders, getUserOrders } = useOrderStore();
+  const { orders, getUserOrders, setSelectedOrder } = useOrderStore();
 
   const [filter, setFilter] = useState("ON GOING");
 
@@ -21,6 +22,13 @@ const Activities = () => {
       : orders.filter(
           (order) => order.status !== "pending" && order.status !== "processing"
         );
+
+  const handleViewOrder = (order: Order) => {
+    setSelectedOrder(order);
+
+    goToViewOrder();
+  };
+
   useEffect(() => {
     getUserOrders();
 
@@ -43,7 +51,11 @@ const Activities = () => {
       <ScrollView contentContainerClassName="pb-[100px] px-6 gap-2 items-center">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order, index) => (
-            <OrderActivityCard key={index} order={order} />
+            <OrderActivityCard
+              key={index}
+              order={order}
+              onPress={() => handleViewOrder(order)}
+            />
           ))
         ) : (
           <Text className="font-poppins-regular text-black-100/50 text-xl">

@@ -16,6 +16,11 @@ const OrderingScreensLayout = () => {
       <Stack.Screen name="edit_profile" options={{ headerShown: false }} />
       <Stack.Screen name="view_product" options={{ headerShown: false }} />
       <Stack.Screen name="product_form" options={{ headerShown: false }} />
+      <Stack.Screen name="view_order" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="view_order_details"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 };

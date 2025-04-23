@@ -7,9 +7,14 @@ import { priceFormatted } from "@/helpers/utils";
 interface ComponentProps {
   order: Order;
   onComplete: () => void;
+  onViewDetails: () => void;
 }
 
-const OnProcessOrderCard = ({ order, onComplete }: ComponentProps) => {
+const OnProcessOrderCard = ({
+  order,
+  onComplete,
+  onViewDetails,
+}: ComponentProps) => {
   const imageURLs = order.items
     .slice(0, 14)
     .map((item) => item.productID.productImageUrl);
@@ -26,15 +31,9 @@ const OnProcessOrderCard = ({ order, onComplete }: ComponentProps) => {
 
         <CustomButton
           title="View details"
-          textClassname="font-poppins-semibold text-white/60 text-sm"
+          textClassname="font-poppins-semibold text-white/60 text-sm mb-4"
+          onPress={onViewDetails}
         />
-      </View>
-
-      {/* Customer Note */}
-      <View className="py-6">
-        <Text className="font-poppins-regular text-black-100/80">
-          {order.customerNote || "No note"}
-        </Text>
       </View>
 
       {/* items and product */}

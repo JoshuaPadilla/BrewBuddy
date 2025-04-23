@@ -5,7 +5,7 @@ export const goBack = () => {
 };
 
 export const goToHome = () => {
-  router.push("/(auth_screens)/(tabs)/cart");
+  router.replace("/(auth_screens)/(tabs)/home");
 };
 
 export const goToLogin = () => {
@@ -50,4 +50,12 @@ export const goToCart = () => {
 
 export const goToProductForm = () => {
   router.push("/(auth_screens)/(utility_screens)/product_form");
+};
+
+export const goToViewOrder = () => {
+  router.push("/(auth_screens)/(utility_screens)/view_order");
+};
+
+export const goToViewOrderDetails = () => {
+  router.push("/(auth_screens)/(utility_screens)/view_order_details");
 };

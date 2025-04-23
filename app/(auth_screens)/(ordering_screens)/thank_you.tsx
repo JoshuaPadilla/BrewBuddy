@@ -24,7 +24,7 @@ const ThankYou = () => {
       </View>
 
       <CustomButton
-        title="Back to Cart"
+        title="Back to home"
         btnClassname="w-[80%] bg-white items-center p-4 rounded-full absolute bottom-40"
         textClassname="font-poppins-bold text-xl text-primary-100"
         onPress={goToHome}

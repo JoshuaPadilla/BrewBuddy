@@ -14,6 +14,7 @@ import InventoryCard from "@/components/staff_components/inventory_card";
 import NewInventoryItemModal from "@/components/staff_components/new_inventory_item_modal";
 import TabbedFilter from "@/components/tabbed_filter";
 import { INVENTORY_FILTER } from "@/constants/filters";
+import socket from "@/lib/socket";
 
 const InventoryScreen = () => {
   const actionRef = useRef("");
@@ -27,6 +28,10 @@ const InventoryScreen = () => {
 
   useEffect(() => {
     getAllItems();
+
+    socket.on("refreshInventory", () => {
+      getAllItems();
+    });
   }, []);
 
   const filteredInventoryItems =
