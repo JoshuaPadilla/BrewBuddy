@@ -15,15 +15,19 @@ const RadioButtonGroup = ({
 }: RadioButtonGroupProps) => {
   return (
     <View className="gap-2">
-      {options.map((option) => (
-        <RadioButton
-          key={option.name}
-          label={option.name}
-          price={option.price}
-          selected={selectedValue === option.name}
-          onPress={() => onValueChange(option)}
-        />
-      ))}
+      {options.map((option) => {
+        if (!option) return;
+
+        return (
+          <RadioButton
+            key={option.name}
+            label={option.name}
+            price={option.price}
+            selected={selectedValue === option.name}
+            onPress={() => onValueChange(option)}
+          />
+        );
+      })}
     </View>
   );
 };

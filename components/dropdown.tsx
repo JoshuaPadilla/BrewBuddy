@@ -31,17 +31,17 @@ const Dropdown = ({
       defaultValue={defaultValue}
       renderButton={(selectedItem) => (
         <View
-          className={`h-[50px] bg-primary-100 rounded-xl flex-row p-4 justify-between items-center ${dropdownButtonClassName}`}
+          className={`h-[50px] border-primary-100 border rounded-xl flex-row p-4 justify-between items-center ${dropdownButtonClassName}`}
         >
           <Text
             className={`font-poppins-regular text-lg ${
-              selectedItem ? "text-white" : "text-black-200"
+              selectedItem ? "text-black-100" : "text-black-200"
             }`}
           >
             {selectedItem ? selectedItem : title}
           </Text>
 
-          <Image source={iconLeft} className="size-4" tintColor={"#ffffff"} />
+          <Image source={iconLeft} className="size-4" tintColor={"#1E1E1E"} />
         </View>
       )}
       renderItem={(item, index, isSelected) => (

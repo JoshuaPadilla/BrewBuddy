@@ -7,6 +7,7 @@ import { Alert } from "react-native";
 interface StoreState {
   inventoryItems: InventoryItem[];
   selectedItem: InventoryItem | null;
+  addOns: { name: string; price: number }[];
   isLoading: boolean;
   isAdding: boolean;
 
@@ -22,6 +23,7 @@ export const useInventoryStore = create<StoreState>((set) => ({
   selectedItem: null,
   isLoading: false,
   isAdding: false,
+  addOns: [],
 
   getAllItems: async () => {
     try {
@@ -39,7 +41,14 @@ export const useInventoryStore = create<StoreState>((set) => ({
       const data = await res.json();
 
       if (data.status === "success") {
+        console.log(data.inventoryItems);
         set({ inventoryItems: data.inventoryItems });
+        set({
+          addOns: data.inventoryItems.map((item: InventoryItem) => {
+            if (item.category === "Add Ons" && item.status !== "out")
+              return { name: item.name, price: item.price };
+          }),
+        });
       } else {
         Alert.alert("failed to fetch inventory items");
       }

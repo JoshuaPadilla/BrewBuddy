@@ -13,3 +13,5 @@ export const SWEETNESS = [
   { name: "Less Sweet", price: 0 },
   { name: "Sweeter", price: 0 },
 ];
+
+export const INVENTORY_ITEM_CATEGORY = ["Essentials", "Add Ons"];

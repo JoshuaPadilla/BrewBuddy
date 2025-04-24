@@ -9,6 +9,7 @@ import { ADD_ONS, SIZES, SWEETNESS } from "@/constants/cart_constants";
 import CustomButton from "./custom_button";
 import { useCartStore } from "@/store/useCart";
 import { Image } from "expo-image";
+import { useInventoryStore } from "@/store/useInventory";
 
 interface Props {
   onSubmit: () => void;
@@ -17,6 +18,7 @@ interface Props {
 const BottomSheetComponent = ({ onSubmit }: Props) => {
   const { selectedProduct } = useProductStore();
   const { addToCart } = useCartStore();
+  const { addOns } = useInventoryStore();
 
   const [orderItem, setOrderItem] = useState<OrderItemForm>({
     quantity: 1,
@@ -81,6 +83,8 @@ const BottomSheetComponent = ({ onSubmit }: Props) => {
     });
     onSubmit();
   };
+
+  console.log(addOns);
 
   useEffect(() => {
     calculateTotal();
@@ -192,7 +196,7 @@ const BottomSheetComponent = ({ onSubmit }: Props) => {
             </View>
 
             <RadioButtonGroup
-              options={ADD_ONS}
+              options={addOns}
               onValueChange={(value) => handleAddOnsSelect(value)}
               selectedValue={orderItem.addOns.name}
             />

@@ -97,6 +97,8 @@ declare interface InventoryItem {
   quantity: number;
   unitOfMeasurement: "kg" | "liters" | "pcs";
   status: "low" | "out" | "in";
+  category?: "Add Ons" | "Essentials";
+  price?: number;
 }
 
 declare interface InventoryItemForm {
@@ -104,4 +106,6 @@ declare interface InventoryItemForm {
   quantity: number;
   unitOfMeasurement?: "kg" | "liters" | "pcs" | string;
   status?: "low" | "out" | "in";
+  category?: "Add Ons" | "Essentials";
+  price: number;
 }

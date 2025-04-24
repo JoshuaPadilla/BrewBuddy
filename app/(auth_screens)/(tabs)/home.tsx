@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Button,
+  Keyboard,
   ScrollView,
   Text,
   View,
@@ -17,32 +18,57 @@ import BottomSheetComponent from "@/components/bottomSheetContent";
 import { useCartStore } from "@/store/useCart";
 import ProductList from "@/components/product_list";
 import socket from "@/lib/socket";
+import { useInventoryStore } from "@/store/useInventory";
 
 const HomeTab = () => {
   const sheetRef = useRef<BottomSheetMethods>(null);
 
   const { products, isLoading, fetchAllProducts, selectedProduct } =
     useProductStore();
+  const { getAllItems } = useInventoryStore();
+
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     fetchAllProducts();
+    getAllItems();
 
     socket.on("refreshProduct", () => {
       fetchAllProducts();
     });
+
+    socket.on("refreshItems", () => {
+      getAllItems();
+    });
   }, []);
 
-  const classicProducts = products.filter(
-    (product) => product.productCategory === "Classic"
-  );
+  const classicProducts = query
+    ? products.filter(
+        (product) =>
+          product.productCategory === "Classic" &&
+          product.productName.toLowerCase().includes(query.toLowerCase())
+      )
+    : products.filter((product) => product.productCategory === "Classic");
 
-  const fruitFlavored = products.filter(
-    (product) => product.productCategory === "Fruit-Flavored"
-  );
+  const fruitFlavored = query
+    ? products.filter(
+        (product) =>
+          product.productCategory === "Fruit-Flavored" &&
+          product.productName.toLowerCase().includes(query.toLowerCase())
+      )
+    : products.filter(
+        (product) => product.productCategory === "Fruit-Flavored"
+      );
 
-  const dessert = products.filter(
-    (product) => product.productCategory === "Dessert-Inspired"
-  );
+  const dessert = query
+    ? products.filter(
+        (product) =>
+          product.productCategory === "Dessert-Inspired" &&
+          product.productName.toLowerCase().includes(query.toLowerCase())
+      )
+    : products.filter(
+        (product) => product.productCategory === "Dessert-Inspired"
+      );
 
   const handleCartPress = () => {
     sheetRef.current?.open();
@@ -51,8 +77,6 @@ const HomeTab = () => {
   const handleAddToCartSubmit = () => {
     sheetRef.current?.close();
   };
-
-  const [query, setQuery] = useState("");
 
   return (
     <>
@@ -69,7 +93,7 @@ const HomeTab = () => {
         {/* search bar */}
         <View className="p-2 mb-4">
           <SearchBar
-            onSubmit={() => {}}
+            onSubmit={Keyboard.dismiss}
             placeholder="search"
             queryValue={query}
             setQuery={setQuery}
@@ -84,26 +108,32 @@ const HomeTab = () => {
         >
           {/* Classic Milk Teas */}
 
-          <ProductList
-            onAddToCartPress={handleCartPress}
-            list={classicProducts}
-            isLoading={isLoading}
-            title="Classic Milk Teas"
-          />
+          {classicProducts.length > 0 && (
+            <ProductList
+              onAddToCartPress={handleCartPress}
+              list={classicProducts}
+              isLoading={isLoading}
+              title="Classic Milk Teas"
+            />
+          )}
 
-          <ProductList
-            onAddToCartPress={handleCartPress}
-            list={fruitFlavored}
-            isLoading={isLoading}
-            title="Fruit Flavored Milk Teas"
-          />
+          {fruitFlavored.length > 0 && (
+            <ProductList
+              onAddToCartPress={handleCartPress}
+              list={fruitFlavored}
+              isLoading={isLoading}
+              title="Fruit Flavored Milk Teas"
+            />
+          )}
 
-          <ProductList
-            onAddToCartPress={handleCartPress}
-            list={dessert}
-            isLoading={isLoading}
-            title="Dessert Inspired Milk Teas"
-          />
+          {dessert.length > 0 && (
+            <ProductList
+              onAddToCartPress={handleCartPress}
+              list={dessert}
+              isLoading={isLoading}
+              title="Dessert Inspired Milk Teas"
+            />
+          )}
         </ScrollView>
       </SafeAreaView>
       <BottomSheet

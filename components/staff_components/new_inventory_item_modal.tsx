@@ -4,6 +4,7 @@ import CustomButton from "../custom_button";
 import { util_icons } from "@/constants/icons";
 import Dropdown from "../dropdown";
 import { useInventoryStore } from "@/store/useInventory";
+import { INVENTORY_ITEM_CATEGORY } from "@/constants/cart_constants";
 
 interface ModalComponentProps {
   modalVisible: boolean;
@@ -19,17 +20,24 @@ const NewInventoryItemModal = ({
   const { addItem, selectedItem, setSelectedItem, editItem, deleteItem } =
     useInventoryStore();
 
+  console.log(selectedItem);
+
   const [form, setForm] = useState<InventoryItemForm>({
     name: selectedItem?.name || "",
     quantity: selectedItem?.quantity || 0,
     unitOfMeasurement: selectedItem?.unitOfMeasurement || "pcs",
+    category: selectedItem?.category || "Essentials",
+    price: selectedItem?.price || 0,
   });
+
+  console.log(form.category);
 
   const resetForm = () => {
     setForm({
       name: "",
       quantity: 0,
       unitOfMeasurement: "pcs",
+      price: 0,
     });
   };
 
@@ -58,6 +66,8 @@ const NewInventoryItemModal = ({
         name: selectedItem.name || "",
         quantity: selectedItem.quantity || 0,
         unitOfMeasurement: selectedItem.unitOfMeasurement || "pcs",
+        price: selectedItem?.price || 0,
+        category: selectedItem.category || "Essentials",
       });
     }
   }, [selectedItem]);
@@ -100,6 +110,25 @@ const NewInventoryItemModal = ({
             contentContainerClassName="pb-[50px] gap-4"
             showsVerticalScrollIndicator={false}
           >
+            {/* category */}
+            <View className="gap-2">
+              <Text className="font-poppins-medium-medium text-md text-black-200">
+                Category
+              </Text>
+              <Dropdown
+                data={INVENTORY_ITEM_CATEGORY}
+                onSelect={(selectedItem) =>
+                  setForm(
+                    (prev) => (prev = { ...prev, category: selectedItem })
+                  )
+                }
+                title="Essentials"
+                iconLeft={util_icons.dropdown_icon}
+                height={250}
+                defaultValue={form.category}
+              />
+            </View>
+
             {/* name */}
             <View className="gap-2">
               <Text className="font-poppins-medium-medium text-md text-black-200">
@@ -118,9 +147,9 @@ const NewInventoryItemModal = ({
               </View>
             </View>
 
-            {/* Quantity and measuement */}
+            {/* Quantity and measuement / price */}
             <View className="flex-row justify-between gap-4 items-center">
-              <View className="gap-2 w-[66%]">
+              <View className="gap-2 w-[40%]">
                 <Text className="font-poppins-medium-medium text-md text-black-200">
                   *Quantity
                 </Text>
@@ -140,24 +169,46 @@ const NewInventoryItemModal = ({
                 </View>
               </View>
 
-              <View className="gap-2 w-[30%]">
-                <Text className="font-poppins-medium-medium text-md text-black-200">
-                  Unit
-                </Text>
-                <Dropdown
-                  data={["kg", "liters", "pcs"]}
-                  onSelect={(selectedItem) =>
-                    setForm(
-                      (prev) =>
-                        (prev = { ...prev, unitOfMeasurement: selectedItem })
-                    )
-                  }
-                  title="Unit"
-                  iconLeft={util_icons.dropdown_icon}
-                  height={250}
-                  defaultValue={form.unitOfMeasurement}
-                />
-              </View>
+              {form.category === "Add Ons" ? (
+                <View className="gap-2 w-[55%]">
+                  <Text className="font-poppins-medium-medium text-md text-black-200">
+                    *price
+                  </Text>
+
+                  <View className="">
+                    <TextInput
+                      className="border border-primary-100 rounded-lg p-4"
+                      value={form!.price.toString()}
+                      multiline
+                      keyboardType="numeric"
+                      onChangeText={(value) =>
+                        setForm(
+                          (prev) => (prev = { ...prev, price: Number(value) })
+                        )
+                      }
+                    />
+                  </View>
+                </View>
+              ) : (
+                <View className="gap-2 w-[55%]">
+                  <Text className="font-poppins-medium-medium text-md text-black-200">
+                    Unit
+                  </Text>
+                  <Dropdown
+                    data={["kg", "liters", "pcs"]}
+                    onSelect={(selectedItem) =>
+                      setForm(
+                        (prev) =>
+                          (prev = { ...prev, unitOfMeasurement: selectedItem })
+                      )
+                    }
+                    title="Unit"
+                    iconLeft={util_icons.dropdown_icon}
+                    height={250}
+                    defaultValue={form.unitOfMeasurement}
+                  />
+                </View>
+              )}
             </View>
 
             <CustomButton
