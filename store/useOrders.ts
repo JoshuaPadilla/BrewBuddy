@@ -17,7 +17,7 @@ interface StoreState {
   isCompleting: boolean;
   setSelectedOrder: (order: Order) => void;
   createOrder: (order: OrderForm) => void;
-  getUserOrders: () => void;
+  getUserOrders: (dateString?: string) => void;
   getAllOrders: () => void;
   moveItemToProcessing: (orderID: string) => void;
   completeOrder: (orderID: string) => void;
@@ -68,12 +68,12 @@ export const useOrderStore = create<StoreState>((set) => ({
     }
   },
 
-  getUserOrders: async () => {
+  getUserOrders: async (date) => {
     try {
       const token = await AsyncStorage.getItem("token");
       const userID = useAuthStore.getState().authUser?._id;
 
-      const res = await fetch(`${BASE_URL}/order/${userID}`, {
+      const res = await fetch(`${BASE_URL}/order/${userID}/${date}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json", // Add this line

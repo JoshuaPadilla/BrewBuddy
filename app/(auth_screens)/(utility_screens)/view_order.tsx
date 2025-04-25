@@ -37,7 +37,10 @@ const ViewOrder = () => {
         <CustomButton />
       </View>
 
-      <ScrollView contentContainerClassName="pb-[100px]">
+      <ScrollView
+        contentContainerClassName="pb-[100px]"
+        showsVerticalScrollIndicator={false}
+      >
         <View className="p-4 bg-white rounded-lg">
           <View className="flex-row justify-between mb-2">
             <Text className="font-poppins-medium text-black-100 text-sm">

@@ -68,7 +68,10 @@ const ViewOrderDetails = () => {
         </View>
       </View>
 
-      <ScrollView contentContainerClassName="pb-[100px]">
+      <ScrollView
+        contentContainerClassName="pb-[100px]"
+        showsVerticalScrollIndicator={false}
+      >
         <View className="p-4 bg-white rounded-lg">
           {selectedOrder?.items.map((item, index) => (
             <OrderItem item={item} key={index} />

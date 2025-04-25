@@ -38,9 +38,10 @@ const Register = () => {
     register(form);
   };
 
-  if (authUser?.role === "user") return <Redirect href="/(tabs)/home" />;
+  if (authUser?.role === "user")
+    return <Redirect href="/(auth_screens)/(tabs)/home" />;
   if (authUser?.role === "admin")
-    return <Redirect href="/(staff)/orders_screen" />;
+    return <Redirect href="/(auth_screens)/(staff)/orders_screen" />;
 
   return (
     <SafeAreaView className="flex flex-1">
@@ -49,7 +50,10 @@ const Register = () => {
         textContent={"Submitting..."}
         textStyle={{ color: "#FFF" }}
       />
-      <ScrollView contentContainerClassName="pb-[150px]">
+      <ScrollView
+        contentContainerClassName="pb-[150px]"
+        showsVerticalScrollIndicator={false}
+      >
         {/* Headings */}
         <View className="p-4 items-center">
           <Image source={images.logo_green} className="size-20" />

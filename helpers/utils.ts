@@ -59,7 +59,9 @@ export const generateUniqueID = (): string => {
   return `${Math.random().toString(36).substring(2, 12)} ${timestamp}`;
 };
 
-export const dateTimeFormatted = (dateString: string): string => {
+export const dateTimeFormatted = (dateString?: string): string => {
+  if (!dateString) return moment().format("MMMM DD YYYY");
+
   const momentObject = moment(dateString);
 
   return momentObject.format("MMMM DD hh:mm A");

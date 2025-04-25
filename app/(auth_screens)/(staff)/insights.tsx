@@ -74,7 +74,10 @@ const Insights = () => {
             </View>
           </View>
 
-          <ScrollView contentContainerClassName="pb-[300px] px-4 gap-2">
+          <ScrollView
+            contentContainerClassName="pb-[300px] px-4 gap-2"
+            showsVerticalScrollIndicator={false}
+          >
             {ordersByDate.map((order, index) => (
               <OnProcessOrderCard
                 order={order}

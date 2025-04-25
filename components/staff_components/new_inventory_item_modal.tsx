@@ -20,7 +20,6 @@ const NewInventoryItemModal = ({
   const { addItem, selectedItem, setSelectedItem, editItem, deleteItem } =
     useInventoryStore();
 
-
   const [form, setForm] = useState<InventoryItemForm>({
     name: selectedItem?.name || "",
     quantity: selectedItem?.quantity || 0,
@@ -28,7 +27,6 @@ const NewInventoryItemModal = ({
     category: selectedItem?.category || "Essentials",
     price: selectedItem?.price || 0,
   });
-
 
   const resetForm = () => {
     setForm({
