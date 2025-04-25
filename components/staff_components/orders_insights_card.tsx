@@ -3,7 +3,7 @@ import React from "react";
 import CustomButton from "../custom_button";
 
 interface ComponentProps {
-  quantity: number;
+  quantity: number | string;
   title: string;
   bgColor: string;
   onView?: () => void;
@@ -22,11 +22,13 @@ const OrdersInsightsCard = ({
           {quantity}
         </Text>
 
-        <CustomButton
-          title="view"
-          textClassname="text-white"
-          onPress={onView}
-        />
+        {onView && (
+          <CustomButton
+            title="view"
+            textClassname="text-white"
+            onPress={onView}
+          />
+        )}
       </View>
 
       <Text className="font-poppins-semibold text-m text-black-100/70">

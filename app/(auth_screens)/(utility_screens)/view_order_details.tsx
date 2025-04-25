@@ -15,10 +15,8 @@ import { useAuthStore } from "@/store/useAuth";
 
 const ViewOrderDetails = () => {
   const { selectedOrder } = useOrderStore();
-  const { createOrder, isCreating } = useOrderStore();
+  const { createOrder } = useOrderStore();
   const { isAdmin } = useAuthStore();
-
-  const statusColor = getOrderStatusColor(selectedOrder?.status);
 
   const handleReOrder = () => {
     const newOrder: OrderForm = {
@@ -84,7 +82,7 @@ const ViewOrderDetails = () => {
               </Text>
             </View>
           )}
-          {selectedOrder?.status === "completed" && (
+          {!isAdmin && selectedOrder?.status === "completed" && (
             <CustomButton
               title="Order Again"
               btnClassname="self-end px-6 py-4 bg-primary-100 rounded-lg"

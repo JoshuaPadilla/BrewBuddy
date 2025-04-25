@@ -62,7 +62,6 @@ const InventoryScreen = () => {
     setModalVisible(true);
   };
 
-  console.log(inventoryItems);
 
   return (
     <SafeAreaView className="flex-1 bg-primary-100">

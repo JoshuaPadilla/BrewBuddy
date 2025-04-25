@@ -1,4 +1,4 @@
-import { tab_icons } from "@/constants/icons";
+import { tab_icons, util_icons } from "@/constants/icons";
 import { useAuthStore } from "@/store/useAuth";
 import { useOrderStore } from "@/store/useOrders";
 import { Redirect, Tabs } from "expo-router";
@@ -124,6 +124,22 @@ export default function StaffTabLayout() {
                 icon={tab_icons.tab_account}
                 focused={focused}
                 title="Account"
+              />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          key="sales"
+          name="insights"
+          options={{
+            title: "insights",
+            headerShown: false,
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
+              <TabIcon
+                icon={util_icons.sales_icon}
+                focused={focused}
+                title="Sales"
               />
             ),
           }}

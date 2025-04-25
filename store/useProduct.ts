@@ -76,7 +76,6 @@ export const useProductStore = create<StoreState>((set) => ({
         } as any);
       }
 
-      // console.log(updatedForm.profilePicture);
       const token = await AsyncStorage.getItem("token");
 
       if (!token) {

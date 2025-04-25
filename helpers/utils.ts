@@ -46,7 +46,11 @@ export const textShortener = (originalWord: string, maxNumOfLetter: number) => {
 export const priceFormatted = (price?: number): string => {
   if (!price || isNaN(price)) return "₱ 0.00";
 
-  return `₱ ${price!.toFixed(2)}`;
+  return `₱ ${price.toLocaleString("en-PH", {
+    // Specify the locale for Philippine Peso formatting
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 };
 
 export const generateUniqueID = (): string => {

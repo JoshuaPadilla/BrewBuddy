@@ -39,7 +39,7 @@ const ProductCard = ({ product, onAddToCartPress }: ProductCardProps) => {
 
   return (
     <>
-      <View className="p-2 w-[48%] h-[250px] mb-4 items-center gap-2 overflow-hidden">
+      <View className="px-2 w-[48%] h-[250px] mb-4 items-center gap-2 overflow-hidden">
         {!product.isAvailable && (
           <View className="flex-row absolute z-10 px-4 p-1 top-2 -left-1 bg-danger rounded-r-xl">
             <Text className="text-white font-poppins-medium text-sm">
@@ -64,7 +64,7 @@ const ProductCard = ({ product, onAddToCartPress }: ProductCardProps) => {
           </TouchableOpacity>
 
           {/* product name and price */}
-          <View className="flex-row justify-between w-full items-end">
+          <View className="flex-row justify-between w-full items-end pl-4">
             <View>
               <Text className="font-poppins-medium">
                 {textShortener(product.productName, 16)}

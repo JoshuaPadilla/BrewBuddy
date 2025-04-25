@@ -41,7 +41,6 @@ export const useInventoryStore = create<StoreState>((set) => ({
       const data = await res.json();
 
       if (data.status === "success") {
-        console.log(data.inventoryItems);
         set({ inventoryItems: data.inventoryItems });
         set({
           addOns: data.inventoryItems.map((item: InventoryItem) => {

@@ -19,9 +19,12 @@ import { useCartStore } from "@/store/useCart";
 import ProductList from "@/components/product_list";
 import socket from "@/lib/socket";
 import { useInventoryStore } from "@/store/useInventory";
+import { goToProfile } from "@/helpers/router_function";
+import { useAuthStore } from "@/store/useAuth";
 
 const HomeTab = () => {
   const sheetRef = useRef<BottomSheetMethods>(null);
+  const { authUser } = useAuthStore();
 
   const { products, isLoading, fetchAllProducts, selectedProduct } =
     useProductStore();
@@ -87,7 +90,14 @@ const HomeTab = () => {
             Ready to Place an order?
           </Text>
 
-          <CustomButton iconLeft={images.sample_avatar} iconSize="size-12" />
+          <CustomButton
+            title={`${authUser?.firstName
+              .at(0)
+              ?.toUpperCase()} ${authUser?.lastName.at(0)?.toUpperCase()}`}
+            onPress={goToProfile}
+            textClassname="font-poppins-bold text-primary-100 text-xl"
+            btnClassname="bg-gray-white size-10 rounded-full items-center justify-center border-2 border-primary-100"
+          />
         </View>
 
         {/* search bar */}

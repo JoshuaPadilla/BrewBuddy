@@ -6,7 +6,7 @@ import { priceFormatted } from "@/helpers/utils";
 
 interface ComponentProps {
   order: Order;
-  onComplete: () => void;
+  onComplete?: () => void;
   onViewDetails: () => void;
 }
 
@@ -79,12 +79,14 @@ const OnProcessOrderCard = ({
         </Text>
       </View>
 
-      <CustomButton
-        title="Complete"
-        btnClassname="items-center justify-center p-4 bg-white rounded-lg"
-        textClassname="font-poppins-medium text-lg text-black-100"
-        onPress={onComplete}
-      />
+      {onComplete && (
+        <CustomButton
+          title="Complete"
+          btnClassname="items-center justify-center p-4 bg-white rounded-lg"
+          textClassname="font-poppins-medium text-lg text-black-100"
+          onPress={onComplete}
+        />
+      )}
     </View>
   );
 };

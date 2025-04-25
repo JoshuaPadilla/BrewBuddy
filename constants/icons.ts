@@ -30,6 +30,8 @@ import success_icon from "@/assets/icons/util_icons/success_icon.png";
 import danger_icon from "@/assets/icons/util_icons/danger_icon.png";
 import edit_pic_icon from "@/assets/icons/util_icons/edit_pic_icon.png";
 import add_picture_icon from "@/assets/icons/util_icons/add_picture_icon.png";
+import sales_icon from "@/assets/icons/util_icons/sales_icon.png";
+import calendar_icon from "@/assets/icons/util_icons/calendar_icon.png";
 
 import inventory_icon from "@/assets/icons/tab_icons/inventory_icon.png";
 import orders_icon from "@/assets/icons/tab_icons/orders_icon.png";
@@ -46,6 +48,8 @@ interface TabIconsProps {
 }
 
 interface UtilIconsProps {
+  calendar_icon: ImageSourcePropType;
+  sales_icon: ImageSourcePropType;
   add_picture_icon: ImageSourcePropType;
   edit_pic_icon: ImageSourcePropType;
   danger_icon: ImageSourcePropType;
@@ -75,6 +79,8 @@ interface UtilIconsProps {
 }
 
 export const util_icons: UtilIconsProps = {
+  calendar_icon,
+  sales_icon,
   add_picture_icon,
   edit_pic_icon,
   success_icon,

@@ -59,3 +59,7 @@ export const goToViewOrder = () => {
 export const goToViewOrderDetails = () => {
   router.push("/(auth_screens)/(utility_screens)/view_order_details");
 };
+
+export const goToProfile = () => {
+  router.push("/(auth_screens)/(tabs)/account");
+};
