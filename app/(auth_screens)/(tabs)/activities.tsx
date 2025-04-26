@@ -10,6 +10,7 @@ import moment from "moment";
 import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
 import { dateTimeFormatted } from "@/helpers/utils";
+import socket from "@/lib/socket";
 
 const ACTIVITY_OPTIONS = ["ON GOING", "COMPLETED"];
 
@@ -38,14 +39,16 @@ const Activities = () => {
 
   useEffect(() => {
     getUserOrders(currDate);
+  }, [currDate, getUserOrders]);
 
-    const intervalId = setInterval(() => {
-      getUserOrders(currDate);
-    }, 5000); // 5000 milliseconds = 5 seconds
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [filter, currDate, getUserOrders]);
+  useEffect(() => {
+    socket.on("orderProcessed", () => {
+      getUserOrders(moment().format("YYYY-MM-DD"));
+    });
+    socket.on("onCompleteOrder", () => {
+      getUserOrders(moment().format("YYYY-MM-DD"));
+    });
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 gap-8">

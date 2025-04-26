@@ -23,9 +23,9 @@ const OrdersScreen = () => {
     setSelectedOrder,
   } = useOrderStore();
 
-  useEffect(() => {
-    getAllOrders();
+  const [reload, setReload] = useState(false);
 
+  useEffect(() => {
     // Listen for incoming 'chat message' event
     socket.on("orderProcessed", (order: Order) => {
       getAllOrders();
@@ -44,6 +44,10 @@ const OrdersScreen = () => {
       socket.disconnect();
     };
   }, []); // Empty dependency array ensures this runs only once on mount and unmount
+
+  useEffect(() => {
+    getAllOrders();
+  }, [reload]);
 
   const handleAddProcess = () => {
     if (pendingOrders.length < 1) return;
@@ -87,14 +91,22 @@ const OrdersScreen = () => {
 
       {/* Order queue */}
       <View className="pl-6">
-        <Text className="font-poppins-medium text-black-100 text-lg mb-2">
-          Order queue:{" "}
-          {pendingOrders.length > 0
-            ? `${pendingOrders.length} ${
-                pendingOrders.length > 1 ? "items" : "item"
-              }`
-            : "no pending order"}
-        </Text>
+        <View className="flex-row items-center justify-between pr-6">
+          <Text className="font-poppins-medium text-black-100 text-lg mb-2">
+            Order queue:{" "}
+            {pendingOrders.length > 0
+              ? `${pendingOrders.length} ${
+                  pendingOrders.length > 1 ? "items" : "item"
+                }`
+              : "no pending order"}
+          </Text>
+
+          <CustomButton
+            iconLeft={util_icons.reload_icon}
+            iconSize="size-8"
+            onPress={() => setReload((prev) => (prev = !prev))}
+          />
+        </View>
 
         <View className="mb-4">
           <ScrollView

@@ -85,8 +85,6 @@ export const useOrderStore = create<StoreState>((set) => ({
 
       if (data.status === "success") {
         set({ orders: data.userOrders });
-      } else {
-        Alert.alert("failed to fetch your orders");
       }
     } catch (error) {
       console.log("Fetching orders: ", error);

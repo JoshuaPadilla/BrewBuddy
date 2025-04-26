@@ -21,9 +21,11 @@ import { useCartStore } from "@/store/useCart";
 import { Toast } from "react-native-toast-notifications";
 import { useOrderStore } from "@/store/useOrders";
 import TabbedSelector from "@/components/tabbed_selector";
+import { useInventoryStore } from "@/store/useInventory";
 
 const ViewProduct = () => {
   const { isAdmin } = useAuthStore();
+  const { addOns } = useInventoryStore();
 
   const {
     selectedProduct,
@@ -279,7 +281,7 @@ const ViewProduct = () => {
                 </View>
 
                 <RadioButtonGroup
-                  options={ADD_ONS}
+                  options={addOns}
                   onValueChange={(value) => handleAddOnsSelect(value)}
                   selectedValue={orderItem.addOns.name}
                 />

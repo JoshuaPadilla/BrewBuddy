@@ -84,8 +84,6 @@ const BottomSheetComponent = ({ onSubmit }: Props) => {
     onSubmit();
   };
 
-  console.log(addOns);
-
   useEffect(() => {
     calculateTotal();
   }, [orderItem.addOns.name, orderItem.quantity, orderItem.itemSize.name]);

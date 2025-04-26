@@ -32,6 +32,7 @@ import edit_pic_icon from "@/assets/icons/util_icons/edit_pic_icon.png";
 import add_picture_icon from "@/assets/icons/util_icons/add_picture_icon.png";
 import sales_icon from "@/assets/icons/util_icons/sales_icon.png";
 import calendar_icon from "@/assets/icons/util_icons/calendar_icon.png";
+import reload_icon from "@/assets/icons/util_icons/reload_icon.png";
 
 import inventory_icon from "@/assets/icons/tab_icons/inventory_icon.png";
 import orders_icon from "@/assets/icons/tab_icons/orders_icon.png";
@@ -48,6 +49,7 @@ interface TabIconsProps {
 }
 
 interface UtilIconsProps {
+  reload_icon: ImageSourcePropType;
   calendar_icon: ImageSourcePropType;
   sales_icon: ImageSourcePropType;
   add_picture_icon: ImageSourcePropType;
@@ -79,6 +81,7 @@ interface UtilIconsProps {
 }
 
 export const util_icons: UtilIconsProps = {
+  reload_icon,
   calendar_icon,
   sales_icon,
   add_picture_icon,

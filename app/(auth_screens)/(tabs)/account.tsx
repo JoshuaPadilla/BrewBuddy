@@ -21,6 +21,8 @@ const Account = () => {
         <View className="absolute -bottom-16 bg-gray-200 size-36 rounded-full items-center justify-center">
           <Text className="font-poppins-bold text-primary-100 text-5xl">
             {authUser?.firstName.at(0)?.toUpperCase()}
+          </Text>
+          <Text className="font-poppins-bold text-primary-100 text-5xl">
             {authUser?.lastName.at(0)?.toUpperCase()}
           </Text>
         </View>
