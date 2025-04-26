@@ -15,11 +15,13 @@ import NewInventoryItemModal from "@/components/staff_components/new_inventory_i
 import TabbedFilter from "@/components/tabbed_filter";
 import { INVENTORY_FILTER } from "@/constants/filters";
 import socket from "@/lib/socket";
+import ToggleFilter from "@/components/staff_components/toggle_filter";
 
 const InventoryScreen = () => {
   const actionRef = useRef("");
 
   const [filter, setFilter] = useState("All");
+  const [essentials, setEssentials] = useState(true);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -34,10 +36,14 @@ const InventoryScreen = () => {
     });
   }, []);
 
+  const categorizedItems = essentials
+    ? inventoryItems.filter((item) => item.category === "Essentials")
+    : inventoryItems.filter((item) => item.category === "Add Ons");
+
   const filteredInventoryItems =
     filter === "All"
-      ? inventoryItems
-      : inventoryItems.filter((item) => item.status === filter);
+      ? categorizedItems
+      : categorizedItems.filter((item) => item.status === filter);
 
   const outOfStockItem = inventoryItems.reduce((acc, currItem) => {
     return currItem.status === "out" ? acc + 1 : acc;
@@ -61,7 +67,6 @@ const InventoryScreen = () => {
     actionRef.current = "add";
     setModalVisible(true);
   };
-
 
   return (
     <SafeAreaView className="flex-1 bg-primary-100">
@@ -125,14 +130,11 @@ const InventoryScreen = () => {
             Inventory Items:
           </Text>
 
-          {/* <CustomButton
-            title="Sort by"
-            btnClassname="flex-row items-center gap-2"
-            textClassname="font-poppins-semibold text-m text-black-200/50"
-            iconRight={util_icons.sort_icon}
-            iconRightClassName="size-4"
-            tintColor="#73C088"
-          /> */}
+          <ToggleFilter
+            falseValue="Add Ons"
+            trueValue="Essentials"
+            onPress={() => setEssentials((prev) => (prev = !prev))}
+          />
         </View>
 
         {/* filter */}
