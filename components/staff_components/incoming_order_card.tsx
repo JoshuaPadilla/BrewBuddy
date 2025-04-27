@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
 import { priceFormatted, textShortener } from "@/helpers/utils";

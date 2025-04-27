@@ -10,7 +10,6 @@ const OrderingScreensLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="account_settings" options={{ headerShown: false }} />
-      <Stack.Screen name="faq" options={{ headerShown: false }} />
       <Stack.Screen name="help_center" options={{ headerShown: false }} />
       <Stack.Screen name="voucher_rewards" options={{ headerShown: false }} />
       <Stack.Screen name="edit_profile" options={{ headerShown: false }} />

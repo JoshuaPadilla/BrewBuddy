@@ -48,7 +48,8 @@ export const useAuthStore = create<StoreState>((set) => ({
 
         router.replace("/(auth_screens)/(tabs)/home");
       } else {
-        Alert.alert(`${data.message}`);
+        Alert.alert("login failed");
+        console.log("registration failed: ", data);
       }
     } catch (error) {
       console.log("error in registration", error);

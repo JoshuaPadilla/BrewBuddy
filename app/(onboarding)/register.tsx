@@ -6,13 +6,14 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   ScrollView,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants/images";
 import CustomButton from "@/components/custom_button";
 import InputField from "@/components/input_field";
-import { goToLogin } from "@/helpers/router_function";
+import { goToLogin, goToWelcome } from "@/helpers/router_function";
 import { isRegistrationFormValid } from "@/helpers/utils";
 import { useAuthStore } from "@/store/useAuth";
 import Spinner from "react-native-loading-spinner-overlay";
@@ -55,9 +56,9 @@ const Register = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Headings */}
-        <View className="p-4 items-center">
+        <Pressable className="p-4 items-center" onPress={goToWelcome}>
           <Image source={images.logo_green} className="size-20" />
-        </View>
+        </Pressable>
 
         <KeyboardAvoidingView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

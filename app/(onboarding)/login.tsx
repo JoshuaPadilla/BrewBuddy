@@ -6,6 +6,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Alert,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,7 +14,7 @@ import { images } from "@/constants/images";
 import CustomButton from "@/components/custom_button";
 import { util_icons } from "@/constants/icons";
 import InputField from "@/components/input_field";
-import { goToRegister } from "@/helpers/router_function";
+import { goToRegister, goToWelcome } from "@/helpers/router_function";
 import { useAuthStore } from "@/store/useAuth";
 import Spinner from "react-native-loading-spinner-overlay";
 import { Redirect } from "expo-router";
@@ -48,9 +49,9 @@ const Login = () => {
       />
 
       {/* Headings */}
-      <View className="p-16 items-center">
+      <Pressable className="p-16 items-center" onPress={goToWelcome}>
         <Image source={images.logo_green} className="size-28" />
-      </View>
+      </Pressable>
 
       <KeyboardAvoidingView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -114,22 +114,6 @@ export default function StaffTabLayout() {
         />
 
         <Tabs.Screen
-          key="account"
-          name="staff_account"
-          options={{
-            title: "Account",
-            headerShown: false,
-            tabBarIcon: ({ focused }: { focused: boolean }) => (
-              <TabIcon
-                icon={tab_icons.tab_account}
-                focused={focused}
-                title="Account"
-              />
-            ),
-          }}
-        />
-
-        <Tabs.Screen
           key="sales"
           name="insights"
           options={{
@@ -140,6 +124,21 @@ export default function StaffTabLayout() {
                 icon={util_icons.sales_icon}
                 focused={focused}
                 title="Sales"
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          key="account"
+          name="staff_account"
+          options={{
+            title: "Account",
+            headerShown: false,
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
+              <TabIcon
+                icon={tab_icons.tab_account}
+                focused={focused}
+                title="Account"
               />
             ),
           }}

@@ -47,9 +47,10 @@ const Insights = () => {
         </Text>
 
         <CustomButton
-          iconLeft={util_icons.calendar_icon}
+          // title={currDate}
+          iconRightClassName="size-8"
+          iconRight={util_icons.calendar_icon}
           tintColor="#73C088"
-          iconSize="size-8"
           onPress={() => setDateModalVisible(true)}
         />
       </View>
@@ -78,7 +79,7 @@ const Insights = () => {
             contentContainerClassName="pb-[300px] px-4 gap-2"
             showsVerticalScrollIndicator={false}
           >
-            {ordersByDate.map((order, index) => (
+            {ordersByDate.reverse().map((order, index) => (
               <OnProcessOrderCard
                 order={order}
                 key={index}

@@ -18,7 +18,7 @@ const Account = () => {
     <SafeAreaView className="flex-1 items-start">
       {/* circle */}
       <View className="w-full h-[25%] bg-primary-100 items-center">
-        <View className="absolute -bottom-16 bg-gray-200 size-36 rounded-full items-center justify-center">
+        <View className="absolute -bottom-16 bg-gray-200 size-36 rounded-full items-center justify-center flex-row">
           <Text className="font-poppins-bold text-primary-100 text-5xl">
             {authUser?.firstName.at(0)?.toUpperCase()}
           </Text>
@@ -64,15 +64,6 @@ const Account = () => {
           iconSize="size-8"
           textClassname="font-poppins-medium text-black-100 text-lg"
           onPress={goToVoucherAndReward}
-        />
-
-        <CustomButton
-          iconLeft={util_icons.faq_icon}
-          title="FAQ"
-          btnClassname="flex-row gap-2 items-center"
-          iconSize="size-8"
-          textClassname="font-poppins-medium text-black-100 text-lg"
-          onPress={goToFAQ}
         />
 
         <CustomButton

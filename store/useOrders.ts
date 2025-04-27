@@ -87,7 +87,7 @@ export const useOrderStore = create<StoreState>((set) => ({
         set({ orders: data.userOrders });
       }
     } catch (error) {
-      console.log("Fetching orders: ", error);
+      console.log("Fetching user orders: ", error);
     }
   },
 

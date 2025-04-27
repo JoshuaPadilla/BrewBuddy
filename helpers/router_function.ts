@@ -24,10 +24,6 @@ export const goToVoucherAndReward = () => {
   router.push("/(auth_screens)/(utility_screens)/voucher_rewards");
 };
 
-export const goToFAQ = () => {
-  router.push("/(auth_screens)/(utility_screens)/faq");
-};
-
 export const goToAccountSettings = () => {
   router.push("/(auth_screens)/(utility_screens)/account_settings");
 };
@@ -62,4 +58,8 @@ export const goToViewOrderDetails = () => {
 
 export const goToProfile = () => {
   router.push("/(auth_screens)/(tabs)/account");
+};
+
+export const goToWelcome = () => {
+  router.push("/(onboarding)/welcome");
 };
