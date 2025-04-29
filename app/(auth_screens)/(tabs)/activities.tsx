@@ -65,18 +65,20 @@ const Activities = () => {
         setSelected={(value) => setFilter(value)}
       />
 
-      <View className="px-6 flex-row items-center justify-between">
-        <Text className="font-poppins-bold text-primary-100 text-xl">
-          {moment(currDate).format("MMMM DD YYYY")}
-        </Text>
+      {filter !== "ON GOING" && (
+        <View className="px-6 flex-row items-center justify-between">
+          <Text className="font-poppins-bold text-primary-100 text-xl">
+            {moment(currDate).format("MMMM DD YYYY")}
+          </Text>
 
-        <CustomButton
-          iconLeft={util_icons.calendar_icon}
-          tintColor="#73C088"
-          iconSize="size-8"
-          onPress={() => setDateModalVisible(true)}
-        />
-      </View>
+          <CustomButton
+            iconLeft={util_icons.calendar_icon}
+            tintColor="#73C088"
+            iconSize="size-8"
+            onPress={() => setDateModalVisible(true)}
+          />
+        </View>
+      )}
 
       <ScrollView
         contentContainerClassName="pb-[100px] px-6 gap-2 items-center"

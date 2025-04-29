@@ -1,5 +1,5 @@
-export const BASE_URL = "http://3.27.193.244:3001/api/brew-buddy";
-export const SOCKET_URL = "http://3.27.193.244:3001";
+export const BASE_URL = "http://172.20.10.6:3001/api/brew-buddy";
+export const SOCKET_URL = "http://172.20.10.6:3001";
 
 // 192.168.101.18 Home
 // 172.20.10.13 hotspot

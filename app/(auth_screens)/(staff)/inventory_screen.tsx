@@ -147,7 +147,7 @@ const InventoryScreen = () => {
         </View>
 
         <ScrollView
-          contentContainerClassName="gap-1"
+          contentContainerClassName="gap-1 pb-[100px] "
           showsVerticalScrollIndicator={false}
         >
           {(isAdding || isLoading) && (

@@ -6,7 +6,6 @@ import { useAuthStore } from "@/store/useAuth";
 import { util_icons } from "@/constants/icons";
 import {
   goToAccountSettings,
-  goToFAQ,
   goToHelpCenter,
   goToVoucherAndReward,
 } from "@/helpers/router_function";

@@ -16,7 +16,7 @@ const OnProcessOrderCard = ({
   onViewDetails,
 }: ComponentProps) => {
   const imageURLs = order.items
-    .slice(0, 14)
+    .slice(0, 13)
     .map((item) => item.productID.productImageUrl);
 
   const remainingItems = order.items.length - imageURLs.length;
