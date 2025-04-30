@@ -287,25 +287,26 @@ const ViewProduct = () => {
                 />
               </View>
             </View>
-          ) : isUpdating ? (
-            <ActivityIndicator
-              className="p-16"
-              color="#73C088"
-              size={"large"}
-            />
           ) : (
             // buttons for product actions
             <View className="p-4 gap-4">
-              {/* for changing availability */}
-              <View className="items-center justify-center">
-                <TabbedSelector
-                  data={["available", "not available"]}
-                  onSelect={(selectedValue) =>
-                    handleChangeAvailability(selectedValue)
-                  }
-                  defaultSelected={availabilityRef.current}
+              {isUpdating ? (
+                <ActivityIndicator
+                  className="p-2"
+                  color="#73C088"
+                  size={"large"}
                 />
-              </View>
+              ) : (
+                <View className="items-center justify-center">
+                  <TabbedSelector
+                    data={["available", "not available"]}
+                    onSelect={(selectedValue) =>
+                      handleChangeAvailability(selectedValue)
+                    }
+                    defaultSelected={availabilityRef.current}
+                  />
+                </View>
+              )}
 
               <View>
                 {/* for editing */}
